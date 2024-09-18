@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   combineLatest,
   filter,
-  forkJoin,
+  forkJoin, fromEvent,
   map,
   Observable,
   Subject,
@@ -25,15 +25,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private mockDataService: MockDataService) {}
 
+
+
   ngOnInit(): void {
     this.initLoadingState();
     this.initCharacterEvents();
+
   }
 
   changeCharactersInput(element: any): void {
     // 1.1. Add functionality to changeCharactersInput method. Changes searchTermByCharacters Subject value on input change.
     const inputValue: string = element.target.value;
     // YOUR CODE STARTS HERE
+    this.searchTermByCharacters.next(inputValue);
 
     // YOUR CODE ENDS HERE
   }
@@ -46,11 +50,15 @@ export class AppComponent implements OnInit, OnDestroy {
     // 3. Add debounce to prevent API calls until user stop typing.
 
     this.charactersResults$ = this.searchTermByCharacters
-        .pipe
-        // YOUR CODE STARTS HERE
+        .pipe(
 
+
+        // YOUR CODE STARTS HERE
+          switchMap((input: string) =>
+          this.mockDataService.getCharacters(input)
+          )
         // YOUR CODE ENDS HERE
-        ();
+        )
   }
 
   loadCharactersAndPlanet(): void {
