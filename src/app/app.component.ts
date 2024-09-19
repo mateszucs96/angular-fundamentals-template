@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
-  combineLatest,
+  combineLatest, debounceTime,
   filter,
   forkJoin, fromEvent,
   map,
@@ -54,9 +54,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
         // YOUR CODE STARTS HERE
-          switchMap((input: string) =>
-          this.mockDataService.getCharacters(input)
-          )
+            filter(input => input.length >= 3),
+            switchMap((input: string) =>
+            this.mockDataService.getCharacters(input)
+            ),
+            debounceTime(400)
         // YOUR CODE ENDS HERE
         )
   }
@@ -65,6 +67,15 @@ export class AppComponent implements OnInit, OnDestroy {
     // 4. On clicking the button 'Load Characters And Planets', it is necessary to process two requests and combine the results of both requests into one result array. As a result, a list with the names of the characters and the names of the planets is displayed on the screen.
     // Your code should looks like this: this.planetAndCharactersResults$ = /* Your code */
     // YOUR CODE STARTS HERE
+    const charactersResponse$ = this.mockDataService.getCharacters();
+    const planetsResponse$ = this.mockDataService.getPlanets();
+
+    this.planetAndCharactersResults$ = forkJoin([charactersResponse$, planetsResponse$]).pipe(
+        map(([characters, planets]) => {
+          console.log([...characters, ...planets]);
+          return [...characters, ...planets];
+        })
+    )
     // YOUR CODE ENDS HERE
   }
 
