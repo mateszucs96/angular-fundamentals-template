@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   combineLatest, debounceTime,
   filter,
-  forkJoin, fromEvent,
+  forkJoin,
   map,
   Observable,
   Subject,
@@ -58,7 +58,7 @@ export class AppComponent implements OnInit, OnDestroy {
             switchMap((input: string) =>
             this.mockDataService.getCharacters(input)
             ),
-            debounceTime(400)
+            debounceTime(500)
         // YOUR CODE ENDS HERE
         )
   }
@@ -86,12 +86,24 @@ export class AppComponent implements OnInit, OnDestroy {
     - Subscribe to changes
     - Check the received value using the areAllValuesTrue function and pass them to the isLoading variable. */
     // YOUR CODE STARTS HERE
+    const charactersLoader$ = this.mockDataService.getCharactersLoader();
+    const planetsLoader$ = this.mockDataService.getPlanetLoader();
+
+    const combinedLoader$ = combineLatest([charactersLoader$, planetsLoader$])
+        .pipe(map((loaders) => this.areAllValuesTrue(loaders)));
+
+    const loaderSubscription = combinedLoader$.subscribe((isLoading: boolean) => {
+      this.isLoading = isLoading;
+    });
+
+    this.subscriptions.push(loaderSubscription);
     // YOUR CODE ENDS HERE
   }
 
   ngOnDestroy(): void {
     // 5.2 Unsubscribe from all subscriptions
     // YOUR CODE STARTS HERE
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
     // YOUR CODE ENDS HERE
   }
 
