@@ -1,17 +1,22 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { mapAuthorIdsToNames } from '@app/utilities/author-utils';
+import { mockedAuthorsList } from '@shared/mocks/mocks';
 
 @Component({
   selector: 'app-course-card',
   templateUrl: './course-card.component.html',
   styleUrls: ['./course-card.component.scss'],
 })
-export class CourseCardComponent {
+export class CourseCardComponent implements OnInit {
   @Input() title!: string;
   @Input() description!: string;
   @Input() creationDate!: string;
   @Input() duration!: number;
   @Input() authors!: string[];
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor() {}
   @Input() isEditable = false;
+  authorsNames: string[] = [];
+
+  ngOnInit() {
+    this.authorsNames = mapAuthorIdsToNames(this.authors, mockedAuthorsList);
+  }
 }
