@@ -8,5 +8,6 @@ import { Course } from '@features/courses/course.model';
 })
 export class CourseInfoComponent {
   @Input() course!: Course;
+
   // Use the names for the input `course`.
 }

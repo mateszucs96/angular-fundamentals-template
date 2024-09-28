@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Course } from '@features/courses/course.model';
 import { mockedCoursesList } from '@shared/mocks/mocks';
 
@@ -10,9 +10,11 @@ import { mockedCoursesList } from '@shared/mocks/mocks';
 export class CoursesListComponent {
   @Input() courses: Course[] = mockedCoursesList;
   @Input() isEditable = false;
+  @Output() courseSelected = new EventEmitter<any>();
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor() {
-    console.log(this.courses);
+  onShowCourse(course: any) {
+    this.courseSelected.emit(course);
+    console.log('Course shown:', course);
+    // You can also delegate it further up to the grandparent if needed
   }
 }

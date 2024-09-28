@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { mapAuthorIdsToNames } from '@app/utilities/author-utils';
 import { mockedAuthorsList } from '@shared/mocks/mocks';
+import { Course } from '@features/courses/course.model';
 
 @Component({
   selector: 'app-course-card',
@@ -8,15 +9,20 @@ import { mockedAuthorsList } from '@shared/mocks/mocks';
   styleUrls: ['./course-card.component.scss'],
 })
 export class CourseCardComponent implements OnInit {
-  @Input() title!: string;
-  @Input() description!: string;
-  @Input() creationDate!: string;
-  @Input() duration!: number;
-  @Input() authors!: string[];
+  @Input() course!: Course;
   @Input() isEditable = false;
   authorsNames: string[] = [];
 
   ngOnInit() {
-    this.authorsNames = mapAuthorIdsToNames(this.authors, mockedAuthorsList);
+    this.authorsNames = mapAuthorIdsToNames(
+      this.course.authors,
+      mockedAuthorsList
+    );
+  }
+
+  @Output() showCourse = new EventEmitter<Course>();
+  clickOnShow(course: Course) {
+    this.showCourse.emit(course);
+    console.log(course);
   }
 }

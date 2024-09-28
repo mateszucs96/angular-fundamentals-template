@@ -1,9 +1,7 @@
 <main class="course-list">
   <app-course-card
     *ngFor="let course of courses"
-    [title]="course.title"
-    [description]="course.description"
-    [creationDate]="course.creationDate"
-    [duration]="course.duration"
-    [authors]="course.authors"></app-course-card>
+    [course]="course"
+    (showCourse)="onShowCourse($event)"></app-course-card>
+  >
 </main>

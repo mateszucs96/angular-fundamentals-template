@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { mockedCoursesList } from '@shared/mocks/mocks';
+import { Course } from '@features/courses/course.model';
 
 @Component({
   selector: 'app-courses',
@@ -7,7 +8,11 @@ import { mockedCoursesList } from '@shared/mocks/mocks';
   styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent {
-  constructor() {}
-
   protected readonly mockedCoursesList = mockedCoursesList;
+
+  selectedCourse!: Course;
+
+  onCourseSelected(course: Course) {
+    this.selectedCourse = course;
+  }
 }
