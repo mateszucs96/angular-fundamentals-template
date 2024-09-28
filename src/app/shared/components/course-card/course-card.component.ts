@@ -10,7 +10,7 @@ import { Course } from '@features/courses/course.model';
 })
 export class CourseCardComponent implements OnInit {
   @Input() course!: Course;
-  @Input() isEditable = false;
+  @Input() isEditable = true;
   authorsNames: string[] = [];
 
   ngOnInit() {

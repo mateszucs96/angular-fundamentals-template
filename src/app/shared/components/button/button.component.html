@@ -1,4 +1,4 @@
-<button class="app-button">
+<button class="app-button" [ngClass]="{ 'icon-only ': !buttonText }">
   <!-- Replace the text below with your code -->
   <fa-icon *ngIf="iconName" [icon]="[iconPrefix, iconName]"></fa-icon>
 
