@@ -10,10 +10,13 @@ import { mockedCoursesList } from '@shared/mocks/mocks';
 export class CoursesListComponent {
   @Input() courses: Course[] = mockedCoursesList;
   @Input() isEditable = false;
-  @Output() courseSelected = new EventEmitter<any>();
+
+  @Output() showCourse = new EventEmitter<any>();
+  @Output() editCourse = new EventEmitter<any>();
+  @Output() deleteCourse = new EventEmitter<any>();
 
   onShowCourse(course: any) {
-    this.courseSelected.emit(course);
+    this.showCourse.emit(course);
     console.log('Course shown:', course);
     // You can also delegate it further up to the grandparent if needed
   }

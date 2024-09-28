@@ -23,8 +23,8 @@
       <app-button
         [buttonText]="'show course'"
         (click)="clickOnShow(course)"></app-button>
-      <div class="course-card__buttons">
-        <!--Enter your code here-->
+      <div *ngIf="isEditable" class="course-card__buttons">
+        <ng-content></ng-content>
       </div>
     </div>
   </div>
