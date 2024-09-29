@@ -1,7 +1,6 @@
-<button class="app-button" [ngClass]="{ 'icon-only ': !buttonText }">
-  <!-- Replace the text below with your code -->
+<button
+  class="app-button"
+  [ngClass]="{ 'app-button__single-icon': !buttonText }">
   <fa-icon *ngIf="iconName" [icon]="[iconPrefix, iconName]"></fa-icon>
-
-  <!-- Conditionally display button text if buttonText is provided -->
   <span *ngIf="buttonText">{{ buttonText }}</span>
 </button>

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Course } from '@features/courses/course.model';
+import { Course } from '@features/courses/course';
 
 @Component({
   selector: 'app-course-info',
@@ -8,6 +8,4 @@ import { Course } from '@features/courses/course.model';
 })
 export class CourseInfoComponent {
   @Input() course!: Course;
-
-  // Use the names for the input `course`.
 }

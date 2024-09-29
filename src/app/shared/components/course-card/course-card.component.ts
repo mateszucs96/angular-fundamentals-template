@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { mapAuthorIdsToNames } from '@app/utilities/author-utils';
 import { mockedAuthorsList } from '@shared/mocks/mocks';
-import { Course } from '@features/courses/course.model';
+import { Course } from '@features/courses/course';
 
 @Component({
   selector: 'app-course-card',
@@ -23,6 +23,5 @@ export class CourseCardComponent implements OnInit {
   @Output() showCourse = new EventEmitter<Course>();
   clickOnShow(course: Course) {
     this.showCourse.emit(course);
-    console.log(course);
   }
 }

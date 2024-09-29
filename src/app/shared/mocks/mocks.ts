@@ -1,4 +1,4 @@
-import { Course } from '@features/courses/course.model';
+import { Course } from '@features/courses/course';
 
 export const mockedCoursesList: Course[] = [
   {

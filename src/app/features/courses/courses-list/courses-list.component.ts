@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Course } from '@features/courses/course.model';
+import { Course } from '@features/courses/course';
 import { mockedCoursesList } from '@shared/mocks/mocks';
 
 @Component({
@@ -9,15 +9,13 @@ import { mockedCoursesList } from '@shared/mocks/mocks';
 })
 export class CoursesListComponent {
   @Input() courses: Course[] = mockedCoursesList;
-  @Input() isEditable = false;
+  @Input() isEditable = true;
 
-  @Output() showCourse = new EventEmitter<any>();
-  @Output() editCourse = new EventEmitter<any>();
-  @Output() deleteCourse = new EventEmitter<any>();
+  @Output() showCourse = new EventEmitter<Course>();
+  @Output() editCourse = new EventEmitter();
+  @Output() deleteCourse = new EventEmitter();
 
-  onShowCourse(course: any) {
+  onShowCourse(course: Course) {
     this.showCourse.emit(course);
-    console.log('Course shown:', course);
-    // You can also delegate it further up to the grandparent if needed
   }
 }
