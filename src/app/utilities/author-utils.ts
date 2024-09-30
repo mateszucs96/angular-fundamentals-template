@@ -1,4 +1,4 @@
-import { Author } from './author.model';
+import { Author } from '@shared/models/author.model';
 
 export function mapAuthorIdsToNames(
   authorIds: string[],

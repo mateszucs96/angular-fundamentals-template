@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Course } from '@features/courses/course';
-import { mockedCoursesList } from '@shared/mocks/mocks';
+import { Course } from '@shared/models/course.model';
+import { IconNames } from '@shared/models/button.model';
 
 @Component({
   selector: 'app-courses-list',
@@ -8,7 +8,8 @@ import { mockedCoursesList } from '@shared/mocks/mocks';
   styleUrls: ['./courses-list.component.scss'],
 })
 export class CoursesListComponent {
-  @Input() courses: Course[] = mockedCoursesList;
+  @Input() courses!: { course: Course; authorsNames: string[] }[];
+  @Input() authorsNames!: string[];
   @Input() isEditable = true;
 
   @Output() showCourse = new EventEmitter<Course>();
@@ -18,4 +19,6 @@ export class CoursesListComponent {
   onShowCourse(course: Course) {
     this.showCourse.emit(course);
   }
+
+  protected readonly IconNames = IconNames;
 }

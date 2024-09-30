@@ -20,7 +20,7 @@
     </div>
     <div class="course-card__info-actions">
       <app-button
-        [buttonText]="'show course'"
+        [buttonText]="ButtonText.showCourse"
         (click)="clickOnShow(course)"></app-button>
       <div *ngIf="isEditable" class="course-card__buttons">
         <ng-content></ng-content>

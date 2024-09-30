@@ -51,6 +51,12 @@
           }
         ]
       }
+    },
+    {
+      "files": ["*.scss"],
+      "plugins": ["scss"],
+      "rules": {
+      }
     }
   ]
 }

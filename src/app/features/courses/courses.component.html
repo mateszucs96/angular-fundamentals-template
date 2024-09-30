@@ -1,7 +1,8 @@
 <app-courses-list
   *ngIf="!selectedCourse"
-  [courses]="mockedCoursesList"
-  (showCourse)="onCourseSelected($event)"></app-courses-list>
-<app-course-info
-  *ngIf="selectedCourse"
-  [course]="selectedCourse"></app-course-info>
+  [courses]="mappedCourses"
+  (showCourse)="onCourseSelected($event)">
+</app-courses-list>
+
+<app-course-info *ngIf="selectedCourse" [course]="selectedCourse">
+</app-course-info>

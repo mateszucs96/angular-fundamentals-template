@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Course } from '@features/courses/course';
+import { Course } from '@shared/models/course.model';
+import { ButtonText } from '@shared/components';
 
 @Component({
   selector: 'app-course-info',
@@ -8,4 +9,5 @@ import { Course } from '@features/courses/course';
 })
 export class CourseInfoComponent {
   @Input() course!: Course;
+  protected readonly ButtonText = ButtonText;
 }
