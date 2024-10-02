@@ -21,7 +21,6 @@
   }
 
   &__info {
-    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -29,6 +28,16 @@
 
     &-text {
       margin-top: 16px;
+      overflow: hidden;
+      white-space: nowrap;
     }
+    &-actions {
+      display: flex;
+      gap: 10px;
+    }
+  }
+  &__buttons {
+    display: flex;
+    gap: 10px;
   }
 }

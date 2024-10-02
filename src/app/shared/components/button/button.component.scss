@@ -14,8 +14,15 @@
     &:hover {
         background: #016486;
     }
+    &:active {
+        background: #0279a5;
+    }
 
     &__single-icon {
         padding: 13px;
+        width: 61px;
     }
 }
+
+
+
