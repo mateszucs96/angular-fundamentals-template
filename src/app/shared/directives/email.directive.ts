@@ -1,12 +1,20 @@
 import { Directive } from '@angular/core';
+import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
 
 @Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
-  selector: '[emailValidator]',
+  selector: '[appEmailValidator]',
   providers: [
-    /*Add your code here*/
+    {
+      provide: NG_VALIDATORS,
+      useExisting: EmailValidatorDirective,
+      multi: true,
+    },
   ],
 })
-export class EmailValidatorDirective {
-  // Add your code here
+export class EmailValidatorDirective implements Validator {
+  validate(control: FormControl) {
+    const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+    const valid = emailRegex.test(control.value);
+    return valid ? null : { invalidEmail: true };
+  }
 }

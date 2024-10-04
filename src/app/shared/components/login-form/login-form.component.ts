@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ButtonText } from '@shared/models/button.model';
 
 @Component({
   selector: 'app-login-form',
@@ -8,5 +9,13 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginFormComponent {
   @ViewChild('loginForm') public loginForm!: NgForm;
-  //Use the names `email` and `password` for form controls.
+
+  email = '';
+  password = '';
+
+  onSubmit(form: NgForm) {
+    console.log(form.value);
+  }
+
+  protected readonly ButtonText = ButtonText;
 }
