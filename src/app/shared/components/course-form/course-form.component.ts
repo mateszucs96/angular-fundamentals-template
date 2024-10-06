@@ -49,7 +49,7 @@ export class CourseFormComponent {
       newAuthor: this.fb.group({
         author: [
           '',
-          [Validators.minLength(2), Validators.pattern('^[a-zA-Z0-9]*$')],
+          [Validators.minLength(2), Validators.pattern('^[a-zA-Z0-9\\s]+$')],
         ],
       }),
       duration: [0, [Validators.required, Validators.min(0)]],
