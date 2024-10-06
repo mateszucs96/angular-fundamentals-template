@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText, IconNames } from '@shared/models/button.model';
@@ -47,10 +55,7 @@ export class CourseFormComponent {
       description: ['', [Validators.required, Validators.minLength(2)]],
       courseAuthors: this.fb.array([]),
       newAuthor: this.fb.group({
-        author: [
-          '',
-          [Validators.minLength(2), Validators.pattern('^[a-zA-Z0-9\\s]+$')],
-        ],
+        author: ['', [Validators.minLength(2), this.authorValidator()]],
       }),
       duration: [0, [Validators.required, Validators.min(0)]],
     });
@@ -120,6 +125,17 @@ export class CourseFormComponent {
     }
 
     console.log(this.courseForm.value);
+  }
+
+  authorValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const valid = /^[a-zA-Z0-9\s]+$/.test(control.value);
+      return !valid
+        ? {
+            invalidAuthor: true,
+          }
+        : null;
+    };
   }
 
   onSubmit() {
