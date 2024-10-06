@@ -13,7 +13,7 @@ import { Author } from '@shared/models/author.model';
 })
 export class CourseFormComponent {
   courseForm!: FormGroup;
-  authors: Author[] = [...mockedAuthorsList];
+  allAuthors: Author[] = [...mockedAuthorsList];
   courseAuthors: Author[] = [];
   protected readonly ButtonText = ButtonText;
   protected readonly IconNames = IconNames;
@@ -53,6 +53,7 @@ export class CourseFormComponent {
         ],
       }),
       duration: [0, [Validators.required, Validators.min(0)]],
+      authors: this.fb.array([]),
     });
   }
 
@@ -80,11 +81,15 @@ export class CourseFormComponent {
     return this.courseForm.get('newAuthor') as FormGroup;
   }
 
+  get authors(): FormArray {
+    return this.courseForm.get('authors') as FormArray;
+  }
+
   addAuthorToCourse(author: Author) {
-    this.authors = this.authors.filter(athr => athr.id !== author.id);
+    this.allAuthors = this.allAuthors.filter(athr => athr.id !== author.id);
 
     this.courseAuthors.push(author);
-    this.courseAuthorsArray.push(this.fb.control(author));
+    this.authors.push(this.fb.control(author));
   }
 
   removeAuthorFromCourse(author: Author) {
@@ -92,7 +97,7 @@ export class CourseFormComponent {
       athr => athr.id !== author.id
     );
 
-    this.authors.push(author);
+    this.allAuthors.push(author);
 
     const index = this.courseAuthorsArray.controls.findIndex(
       c => c.value.id === author.id
@@ -111,9 +116,11 @@ export class CourseFormComponent {
         name: authorName,
       };
 
-      this.authors.push(newAuthor);
+      this.allAuthors.push(newAuthor);
       this.newAuthorGroup.reset();
     }
+
+    console.log(this.courseForm.value);
   }
 
   onSubmit() {

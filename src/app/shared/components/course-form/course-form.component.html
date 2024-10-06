@@ -107,7 +107,7 @@
       <div class="course__authors">
         <h4>Authors list</h4>
         <ul>
-          <li *ngFor="let author of authors">
+          <li *ngFor="let author of allAuthors">
             {{ author.name }}
             <app-button
               [iconName]="IconNames.Plus"

@@ -15,6 +15,6 @@ export class EmailValidatorDirective implements Validator {
   validate(control: FormControl) {
     const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
     const valid = emailRegex.test(control.value);
-    return valid ? null : { invalidEmail: true };
+    return valid ? null : { invalidEmail: control.value };
   }
 }
