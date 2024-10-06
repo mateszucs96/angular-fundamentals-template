@@ -15,6 +15,7 @@ import { ButtonText, IconNames } from '@shared/models/button.model';
 export class ButtonComponent {
   @Input() buttonText?: ButtonText;
   @Input() iconName?: IconNames;
+  @Input() buttonType?: 'submit' | 'button' = 'button';
 
   readonly iconPrefix: IconPrefix = 'fas';
 
