@@ -82,7 +82,7 @@
         <div
           id="authorErrorMessage"
           *ngIf="newAuthor?.invalid && newAuthor?.touched">
-          <span *ngIf="newAuthor?.errors?.['invalidAuthor']" class="text-danger"
+          <span *ngIf="newAuthor?.errors?.['pattern']" class="text-danger"
             >New author should contain only latin letters and numbers.</span
           >
           <span *ngIf="newAuthor?.errors?.['minlength']" class="text-danger"

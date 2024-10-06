@@ -1,13 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText, IconNames } from '@shared/models/button.model';
@@ -19,7 +11,7 @@ import { Author } from '@shared/models/author.model';
   templateUrl: './course-form.component.html',
   styleUrls: ['./course-form.component.scss'],
 })
-export class CourseFormComponent {
+export class CourseFormComponent implements OnInit {
   courseForm!: FormGroup;
   allAuthors: Author[] = [...mockedAuthorsList];
   courseAuthors: Author[] = [];
@@ -31,62 +23,21 @@ export class CourseFormComponent {
     public library: FaIconLibrary
   ) {
     library.addIconPacks(fas);
-    this.buildForm();
   }
 
-  // ngOnInit() {
-  //   // this.courseForm = this.fb.group({
-  //   //   title: ['', [Validators.required, Validators.minLength(2)]],
-  //   //   description: ['', [Validators.required, Validators.minLength(2)]],
-  //   //   courseAuthors: this.fb.array([]),
-  //   //   newAuthor: this.fb.group({
-  //   //     author: [
-  //   //       '',
-  //   //       [Validators.minLength(2), Validators.pattern('^[a-zA-Z0-9]*$')],
-  //   //     ],
-  //   //   }),
-  //   //   duration: [0, [Validators.required, Validators.min(0)]],
-  //   // });
-  // }
-
-  buildForm() {
+  ngOnInit() {
     this.courseForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(2)]],
       description: ['', [Validators.required, Validators.minLength(2)]],
       courseAuthors: this.fb.array([]),
       newAuthor: this.fb.group({
-        author: ['', [Validators.minLength(2), this.authorValidator()]],
+        author: [
+          '',
+          [Validators.minLength(2), Validators.pattern('^[a-zA-Z0-9]*$')],
+        ],
       }),
       duration: [0, [Validators.required, Validators.min(0)]],
     });
-  }
-
-  get title() {
-    return this.courseForm.get('title');
-  }
-
-  get description() {
-    return this.courseForm.get('description');
-  }
-
-  get newAuthor() {
-    return this.courseForm.get('newAuthor.author');
-  }
-
-  get duration() {
-    return this.courseForm.get('duration');
-  }
-
-  get courseAuthorsArray() {
-    return this.courseForm.get('courseAuthors') as FormArray;
-  }
-
-  get newAuthorGroup() {
-    return this.courseForm.get('newAuthor') as FormGroup;
-  }
-
-  get authors(): FormArray {
-    return this.courseForm.get('authors') as FormArray;
   }
 
   addAuthorToCourse(author: Author) {
@@ -123,19 +74,30 @@ export class CourseFormComponent {
       this.allAuthors.push(newAuthor);
       this.newAuthorGroup.reset();
     }
-
-    console.log(this.courseForm.value);
   }
 
-  authorValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const valid = /^[a-zA-Z0-9\s]+$/.test(control.value);
-      return !valid
-        ? {
-            invalidAuthor: true,
-          }
-        : null;
-    };
+  get title() {
+    return this.courseForm.get('title');
+  }
+
+  get description() {
+    return this.courseForm.get('description');
+  }
+
+  get newAuthor() {
+    return this.courseForm.get('newAuthor.author');
+  }
+
+  get duration() {
+    return this.courseForm.get('duration');
+  }
+
+  get courseAuthorsArray() {
+    return this.courseForm.get('courseAuthors') as FormArray;
+  }
+
+  get newAuthorGroup() {
+    return this.courseForm.get('newAuthor') as FormGroup;
   }
 
   onSubmit() {
