@@ -16,7 +16,7 @@
         <div
           id="nameErrorMessage"
           class="text-danger"
-          *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+          *ngIf="name?.invalid && name?.touched">
           <span *ngIf="name?.errors?.['minlength']"
             >Name must be at least 6 characters long.</span
           >
@@ -36,7 +36,7 @@
         <div
           id="emailErrorMessage"
           class="text-danger"
-          *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+          *ngIf="email?.invalid && email?.touched">
           <span *ngIf="email?.errors?.['invalidEmail']">Email is invalid.</span>
           <span *ngIf="email?.errors?.['required']">Email is required.</span>
         </div>
@@ -52,13 +52,18 @@
         <div
           id="passwordErrorMessage"
           class="text-danger"
-          *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+          *ngIf="password?.invalid && password?.touched">
           <span *ngIf="password?.touched">Password is required.</span>
         </div>
       </div>
     </div>
     <div class="form__action">
-      <app-button></app-button>
+      <app-button
+        [buttonType]="'submit'"
+        [buttonText]="ButtonText.signUp"></app-button>
+    </div>
+    <div class="form__text">
+      If you have an account you may <strong><a href="/login">Login</a></strong>
     </div>
   </form>
 </div>

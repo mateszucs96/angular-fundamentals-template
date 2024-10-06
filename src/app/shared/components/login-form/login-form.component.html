@@ -5,48 +5,62 @@
       <div>
         <div class="form__control">
           <label for="email">Email</label>
-          <!--Use the name `email` for the form control.-->
           <input
             type="text"
             id="email"
             name="email"
             appEmailValidator
+            required
             placeholder="Input text"
-            ngModel />
-          <span
-            *ngIf="
-              loginForm.controls?.['email']?.errors &&
-              loginForm.controls?.['email']?.touched
-            "
+            [(ngModel)]="email"
+            #emailInput="ngModel" />
+          <div
             id="emailErrorMessage"
-            class="text-danger"
-            >Email is required.</span
-          >
+            *ngIf="emailInput.invalid && emailInput.touched">
+            <span *ngIf="emailInput.errors?.['required']" class="text-danger"
+              >Email is required.</span
+            >
+            <span
+              *ngIf="emailInput.errors?.['invalidEmail']"
+              class="text-danger"
+              >Email is invalid.</span
+            >
+          </div>
         </div>
         <div class="form__control">
           <label for="password">Password</label>
-          <!--Use the name `password` for the form control.-->
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Input text"
-            required
-            ngModel />
-          <span
-            *ngIf="
-              loginForm.controls?.['password']?.touched &&
-              loginForm.controls?.['password']?.errors?.['required']
-            "
+          <div class="password-input">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Input text"
+              required
+              appTogglePassword
+              #passwordToggle="togglePassword"
+              [(ngModel)]="password"
+              #passwordInput="ngModel" />
+            <app-button
+              [iconName]="
+                passwordToggle.isVisible ? IconNames.Eye : IconNames.EyeSlash
+              "
+              class="toggle-button"
+              (click)="passwordToggle.togglePassword()"></app-button>
+          </div>
+          <div
             id="passwordErrorMessage"
-            class="text-danger"
-            >Password is required.</span
-          >
+            *ngIf="passwordInput.invalid && passwordInput.touched">
+            <span *ngIf="passwordInput.errors?.['required']" class="text-danger"
+              >Password is required.</span
+            >
+          </div>
         </div>
       </div>
       <div>
         <div class="form__action">
-          <app-button [buttonText]="ButtonText.login"></app-button>
+          <app-button
+            [buttonType]="'submit'"
+            [buttonText]="ButtonText.login"></app-button>
         </div>
         <div class="form__text">
           If you don't have an account you may <strong>Registration</strong>

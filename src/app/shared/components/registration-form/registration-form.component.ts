@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EmailValidatorDirective } from '@shared/directives/email.directive';
+import { ButtonText } from '@shared/models/button.model';
 
 @Component({
   selector: 'app-registration-form',
@@ -9,7 +10,7 @@ import { EmailValidatorDirective } from '@shared/directives/email.directive';
 })
 export class RegistrationFormComponent implements OnInit {
   registrationForm!: FormGroup;
-  // Use the names `name`, `email`, `password` for the form controls.
+  protected readonly ButtonText = ButtonText;
 
   ngOnInit() {
     this.registrationForm = new FormGroup({
@@ -20,7 +21,9 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.registrationForm.get('name')?.touched);
+    if (!this.registrationForm.valid) {
+      this.registrationForm.markAllAsTouched();
+    }
   }
 
   get name() {

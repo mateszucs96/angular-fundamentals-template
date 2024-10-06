@@ -24,14 +24,23 @@ textarea {
   border-radius: 4px;
   box-sizing: border-box;
   font-size: 16px;
+  height: 50px;
   margin-top: 4px;
   resize: none;
   font-family: "Open Sans", sans-serif;
 }
 
-input:invalid,
-textarea:invalid {
-  border-color: $color-red;
+a {
+  text-decoration: none;
+  color: rgba(51, 62, 72, 1);
+}
+
+.ng-invalid:not(form,.form__control, .ng-pristine)  {
+  border: 1px solid $color-red;
+}
+
+.ng-touched:not(form,.form__control):is(.ng-invalid) {
+  border: 1px solid $color-red;
 }
 
 button {
@@ -46,4 +55,13 @@ label {
 
 h2 {
   margin-bottom: 36px;
+}
+
+li {
+  list-style: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
 }

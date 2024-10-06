@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ButtonText } from '@shared/models/button.model';
+import { ButtonText, IconNames } from '@shared/models/button.model';
 
 @Component({
   selector: 'app-login-form',
@@ -9,13 +9,15 @@ import { ButtonText } from '@shared/models/button.model';
 })
 export class LoginFormComponent {
   @ViewChild('loginForm') public loginForm!: NgForm;
+  protected readonly ButtonText = ButtonText;
+  protected readonly IconNames = IconNames;
 
   email = '';
   password = '';
 
   onSubmit(form: NgForm) {
-    console.log(form.value);
+    if (!form.valid) {
+      form.control.markAllAsTouched();
+    }
   }
-
-  protected readonly ButtonText = ButtonText;
 }

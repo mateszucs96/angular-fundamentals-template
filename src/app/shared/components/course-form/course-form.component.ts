@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { ButtonText } from '@shared/models/button.model';
+import { ButtonText, IconNames } from '@shared/models/button.model';
 import { mockedAuthorsList } from '@shared/mocks/mocks';
 import { Author } from '@shared/models/author.model';
 
@@ -16,6 +16,7 @@ export class CourseFormComponent implements OnInit {
   authors: Author[] = [...mockedAuthorsList];
   courseAuthors: Author[] = [];
   protected readonly ButtonText = ButtonText;
+  protected readonly IconNames = IconNames;
 
   constructor(
     public fb: FormBuilder,
@@ -87,19 +88,21 @@ export class CourseFormComponent implements OnInit {
 
   createNewAuthor() {
     const authorName = this.newAuthorGroup.get('author')?.value;
-    console.log(authorName);
+
     if (authorName && authorName.length >= 2) {
       const newAuthor = {
         id: Math.floor(Math.random() * 1000).toString(),
         name: authorName,
       };
-      console.log(this.authors);
+
       this.authors.push(newAuthor);
       this.newAuthorGroup.reset();
     }
   }
 
   onSubmit() {
-    console.log(this.courseForm.value);
+    if (!this.courseForm.valid) {
+      this.courseForm.markAllAsTouched();
+    }
   }
 }

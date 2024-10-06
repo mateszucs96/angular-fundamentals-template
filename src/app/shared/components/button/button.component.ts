@@ -3,6 +3,9 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import {
   faPencil,
   faTrashCan,
+  faEyeSlash,
+  faEye,
+  faPlus,
   IconPrefix,
 } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText, IconNames } from '@shared/models/button.model';
@@ -15,11 +18,11 @@ import { ButtonText, IconNames } from '@shared/models/button.model';
 export class ButtonComponent {
   @Input() buttonText?: ButtonText;
   @Input() iconName?: IconNames;
-  @Input() buttonType?: 'submit' | 'button' = 'button';
+  @Input() buttonType: 'submit' | 'button' = 'button';
 
   readonly iconPrefix: IconPrefix = 'fas';
 
   constructor(library: FaIconLibrary) {
-    library.addIcons(faTrashCan, faPencil);
+    library.addIcons(faTrashCan, faPencil, faEye, faEyeSlash, faPlus);
   }
 }
