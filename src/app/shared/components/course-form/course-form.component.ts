@@ -11,7 +11,7 @@ import { Author } from '@shared/models/author.model';
   templateUrl: './course-form.component.html',
   styleUrls: ['./course-form.component.scss'],
 })
-export class CourseFormComponent implements OnInit {
+export class CourseFormComponent {
   courseForm!: FormGroup;
   authors: Author[] = [...mockedAuthorsList];
   courseAuthors: Author[] = [];
@@ -23,9 +23,25 @@ export class CourseFormComponent implements OnInit {
     public library: FaIconLibrary
   ) {
     library.addIconPacks(fas);
+    this.buildForm();
   }
 
-  ngOnInit() {
+  // ngOnInit() {
+  //   // this.courseForm = this.fb.group({
+  //   //   title: ['', [Validators.required, Validators.minLength(2)]],
+  //   //   description: ['', [Validators.required, Validators.minLength(2)]],
+  //   //   courseAuthors: this.fb.array([]),
+  //   //   newAuthor: this.fb.group({
+  //   //     author: [
+  //   //       '',
+  //   //       [Validators.minLength(2), Validators.pattern('^[a-zA-Z0-9]*$')],
+  //   //     ],
+  //   //   }),
+  //   //   duration: [0, [Validators.required, Validators.min(0)]],
+  //   // });
+  // }
+
+  buildForm() {
     this.courseForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(2)]],
       description: ['', [Validators.required, Validators.minLength(2)]],
