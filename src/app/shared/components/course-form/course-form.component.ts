@@ -53,7 +53,6 @@ export class CourseFormComponent {
         ],
       }),
       duration: [0, [Validators.required, Validators.min(0)]],
-      authors: this.fb.array([]),
     });
   }
 
@@ -89,7 +88,7 @@ export class CourseFormComponent {
     this.allAuthors = this.allAuthors.filter(athr => athr.id !== author.id);
 
     this.courseAuthors.push(author);
-    this.authors.push(this.fb.control(author));
+    this.courseAuthorsArray.push(this.fb.control(author));
   }
 
   removeAuthorFromCourse(author: Author) {
