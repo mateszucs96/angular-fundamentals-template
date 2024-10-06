@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +11,7 @@ import { Author } from '@shared/models/author.model';
   templateUrl: './course-form.component.html',
   styleUrls: ['./course-form.component.scss'],
 })
-export class CourseFormComponent implements OnInit {
+export class CourseFormComponent {
   courseForm!: FormGroup;
   allAuthors: Author[] = [...mockedAuthorsList];
   courseAuthors: Author[] = [];
@@ -23,9 +23,10 @@ export class CourseFormComponent implements OnInit {
     public library: FaIconLibrary
   ) {
     library.addIconPacks(fas);
+    this.buildForm();
   }
 
-  ngOnInit() {
+  buildForm() {
     this.courseForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(2)]],
       description: ['', [Validators.required, Validators.minLength(2)]],
