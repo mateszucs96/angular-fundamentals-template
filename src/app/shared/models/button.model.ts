@@ -7,6 +7,7 @@ export enum ButtonText {
   signUp = 'sign up',
   login = 'login',
   logout = 'logout',
+  addNewCourse = 'add new course',
 }
 
 export enum IconNames {
