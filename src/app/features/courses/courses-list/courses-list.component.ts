@@ -16,9 +16,5 @@ export class CoursesListComponent {
   @Output() editCourse = new EventEmitter();
   @Output() deleteCourse = new EventEmitter();
 
-  onShowCourse(course: Course) {
-    this.showCourse.emit(course);
-  }
-
   protected readonly IconNames = IconNames;
 }

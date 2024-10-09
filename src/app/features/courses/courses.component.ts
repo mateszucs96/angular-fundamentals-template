@@ -20,10 +20,9 @@ export class CoursesComponent implements OnInit {
       course,
       authorsNames: mapAuthorIdsToNames(course.authors, mockedAuthorsList),
     }));
-  }
-
-  onCourseSelected(course: Course) {
-    this.selectedCourse = course;
+    this.coursesService.selectedCourse.subscribe((course: Course) => {
+      this.selectedCourse = course;
+    });
   }
 
   onSearch(searchInput: string): void {

@@ -2,8 +2,7 @@
   <ng-container *ngFor="let courseAndAuthors of courses">
     <app-course-card
       [course]="courseAndAuthors.course"
-      [authorsNames]="courseAndAuthors.authorsNames"
-      (showCourse)="onShowCourse($event)">
+      [authorsNames]="courseAndAuthors.authorsNames">
       <app-button [iconName]="IconNames.TrashCan"> </app-button>
       <app-button [iconName]="IconNames.Pencil"> </app-button>
     </app-course-card>

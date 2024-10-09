@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Course } from '@shared/models/course.model';
 import { mockedCoursesList } from '@shared/mocks/mocks';
 
@@ -7,6 +7,7 @@ import { mockedCoursesList } from '@shared/mocks/mocks';
 })
 export class CoursesService {
   private courses: Course[] = [...mockedCoursesList];
+  selectedCourse = new EventEmitter<Course>();
   getAll() {
     return this.courses.slice();
   }
