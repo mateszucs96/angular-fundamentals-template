@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Course } from '@shared/models/course.model';
+import { mockedCoursesList } from '@shared/mocks/mocks';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CoursesService {
+  private courses: Course[] = [...mockedCoursesList];
   getAll() {
-    // Add your code here
+    return this.courses.slice();
   }
 
   createCourse(course: any) {
@@ -18,8 +21,8 @@ export class CoursesService {
     // Add your code here
   }
 
-  getCourse(id: string) {
-    // Add your code here
+  getCourse(id: string): Course {
+    return <Course>this.courses.find(course => course.id === id);
   }
 
   deleteCourse(id: string) {

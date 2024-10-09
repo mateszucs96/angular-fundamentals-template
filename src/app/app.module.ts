@@ -10,9 +10,17 @@ import { CoursesService } from '@app/services/courses.service';
 
 import { CoursesModule } from '@features/courses/courses.module';
 
+import { AppRoutingModule } from '@app/app-routing.module';
+
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, SharedModule, FontAwesomeModule, CoursesModule],
+  imports: [
+    BrowserModule,
+    SharedModule,
+    FontAwesomeModule,
+    CoursesModule,
+    AppRoutingModule,
+  ],
   providers: [
     AuthorizedGuard,
     NotAuthorizedGuard,
