@@ -11,7 +11,9 @@
       </div>
       <div>
         <b>Duration: </b
-        ><span class="course-card__duration">{{ course.duration }}</span>
+        ><span class="course-card__duration">{{
+          course.duration | duration
+        }}</span>
       </div>
       <div>
         <b>Created: </b

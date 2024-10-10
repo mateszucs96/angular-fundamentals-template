@@ -1,11 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import {
+  faEye,
+  faEyeSlash,
   faPencil,
+  faPlus,
   faTrashCan,
   IconPrefix,
 } from '@fortawesome/free-solid-svg-icons';
-import { ButtonText, IconNames } from '@shared/models/button.model';
+import { ButtonText, ButtonType, IconNames } from '@shared/models/button.model';
 
 @Component({
   selector: 'app-button',
@@ -15,10 +18,11 @@ import { ButtonText, IconNames } from '@shared/models/button.model';
 export class ButtonComponent {
   @Input() buttonText?: ButtonText;
   @Input() iconName?: IconNames;
+  @Input() buttonType: ButtonType = ButtonType.Button;
 
   readonly iconPrefix: IconPrefix = 'fas';
 
   constructor(library: FaIconLibrary) {
-    library.addIcons(faTrashCan, faPencil);
+    library.addIcons(faTrashCan, faPencil, faEye, faEyeSlash, faPlus);
   }
 }

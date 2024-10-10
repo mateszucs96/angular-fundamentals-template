@@ -10,6 +10,7 @@
     color: #fff;
     text-transform: uppercase;
     cursor: pointer;
+    width: 100%;
 
     &:hover {
         background: #016486;
@@ -19,9 +20,17 @@
     }
 
     &__single-icon {
-        padding: 13px;
-        width: 61px;
+        background: none;
+        cursor: pointer;
     }
+}
+
+:host-context(.toggle-button) .app-button__single-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: rgba(207, 207, 207, 1);
+    background: none;
 }
 
 
