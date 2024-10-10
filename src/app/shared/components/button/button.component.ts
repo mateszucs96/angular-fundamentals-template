@@ -1,14 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import {
-  faPencil,
-  faTrashCan,
-  faEyeSlash,
   faEye,
+  faEyeSlash,
+  faPencil,
   faPlus,
+  faTrashCan,
   IconPrefix,
 } from '@fortawesome/free-solid-svg-icons';
-import { ButtonText, IconNames } from '@shared/models/button.model';
+import { ButtonText, ButtonType, IconNames } from '@shared/models/button.model';
 
 @Component({
   selector: 'app-button',
@@ -18,7 +18,7 @@ import { ButtonText, IconNames } from '@shared/models/button.model';
 export class ButtonComponent {
   @Input() buttonText?: ButtonText;
   @Input() iconName?: IconNames;
-  @Input() buttonType: 'submit' | 'button' = 'button';
+  @Input() buttonType: ButtonType = ButtonType.Button;
 
   readonly iconPrefix: IconPrefix = 'fas';
 

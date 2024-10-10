@@ -29,6 +29,9 @@ $color-red: #FF0000;
     }
 
     &__action {
+        display: flex;
+        justify-content: flex-end;
+        gap: 16px;
         margin-top: 54px;
     }
 

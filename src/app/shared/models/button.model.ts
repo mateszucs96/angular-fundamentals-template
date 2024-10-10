@@ -4,6 +4,7 @@ export enum ButtonText {
   createAuthor = 'create author',
   search = 'search',
   back = 'back',
+  cancel = 'cancel',
   signUp = 'sign up',
   login = 'login',
   logout = 'logout',
@@ -16,4 +17,9 @@ export enum IconNames {
   Eye = 'eye',
   EyeSlash = 'eye-slash',
   Plus = 'plus',
+}
+
+export enum ButtonType {
+  Submit = 'submit',
+  Button = 'button',
 }

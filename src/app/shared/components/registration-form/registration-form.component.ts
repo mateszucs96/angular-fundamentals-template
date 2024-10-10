@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EmailValidatorDirective } from '@shared/directives/email.directive';
-import { ButtonText } from '@shared/models/button.model';
+import { ButtonText, ButtonType } from '@shared/models/button.model';
 
 @Component({
   selector: 'app-registration-form',
@@ -37,4 +37,6 @@ export class RegistrationFormComponent implements OnInit {
   get password() {
     return this.registrationForm.get('password');
   }
+
+  protected readonly ButtonType = ButtonType;
 }
