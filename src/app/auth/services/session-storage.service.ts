@@ -10,13 +10,18 @@ export class SessionStorageService {
   constructor(@Inject(Window) private window: Window) {}
   setToken(token: string) {
     this.window.sessionStorage.setItem(TOKEN, token);
+    this.getToken();
   }
 
-  getToken() {
-    this.window.sessionStorage.getItem(TOKEN);
+  getToken(): string | null {
+    return this.window.sessionStorage.getItem(TOKEN);
   }
 
   deleteToken() {
     this.window.sessionStorage.removeItem(TOKEN);
+  }
+
+  logToken() {
+    console.log(this.window.sessionStorage);
   }
 }

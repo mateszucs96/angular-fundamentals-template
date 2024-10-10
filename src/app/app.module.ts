@@ -11,6 +11,7 @@ import { CoursesService } from '@app/services/courses.service';
 import { CoursesModule } from '@features/courses/courses.module';
 import { AppRoutingModule } from '@app/app-routing.module';
 import { SessionStorageService } from '@app/auth/services/session-storage.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { SessionStorageService } from '@app/auth/services/session-storage.servic
     FontAwesomeModule,
     CoursesModule,
     AppRoutingModule,
+    HttpClientModule,
   ],
   providers: [
     AuthorizedGuard,
@@ -27,10 +29,10 @@ import { SessionStorageService } from '@app/auth/services/session-storage.servic
     CoursesService,
     CoursesStoreService,
 
-    // {
-    //   provide: Window,
-    //   useValue: window,
-    // },
+    {
+      provide: Window,
+      useValue: window,
+    },
   ],
   bootstrap: [AppComponent],
 })
