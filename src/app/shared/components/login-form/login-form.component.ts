@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ButtonText, IconNames } from '@shared/models/button.model';
+import { ButtonText, ButtonType, IconNames } from '@shared/models/button.model';
 
 @Component({
   selector: 'app-login-form',
@@ -20,4 +20,6 @@ export class LoginFormComponent {
       form.control.markAllAsTouched();
     }
   }
+
+  protected readonly ButtonType = ButtonType;
 }

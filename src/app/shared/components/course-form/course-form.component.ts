@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { ButtonText, IconNames } from '@shared/models/button.model';
+import { ButtonText, ButtonType, IconNames } from '@shared/models/button.model';
 import { mockedAuthorsList } from '@shared/mocks/mocks';
 import { Author } from '@shared/models/author.model';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-course-form',
@@ -68,9 +69,10 @@ export class CourseFormComponent {
 
     if (authorName && authorName.length >= 2) {
       const newAuthor = {
-        id: Math.floor(Math.random() * 1000).toString(),
+        id: uuidv4(),
         name: authorName,
       };
+      console.log(newAuthor);
 
       this.allAuthors.push(newAuthor);
       this.newAuthorGroup.reset();
@@ -106,4 +108,6 @@ export class CourseFormComponent {
       this.courseForm.markAllAsTouched();
     }
   }
+
+  protected readonly ButtonType = ButtonType;
 }

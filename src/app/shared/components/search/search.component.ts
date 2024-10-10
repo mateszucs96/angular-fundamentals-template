@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ButtonText } from '@shared/models/button.model';
+import { ButtonText, ButtonType } from '@shared/models/button.model';
 
 @Component({
   selector: 'app-search',
@@ -15,4 +15,6 @@ export class SearchComponent {
   onSearch(): void {
     this.search.emit(this.searchQuery);
   }
+
+  protected readonly ButtonType = ButtonType;
 }
