@@ -29,13 +29,16 @@ $color-red: #FF0000;
     }
 
     &__action {
+        display: flex;
+        justify-content: flex-end;
+        gap: 16px;
         margin-top: 54px;
     }
 
     &__text {
         text-align: center;
         margin-top: 38px;
-      flex-wrap: wrap;
+        flex-wrap: wrap;
     }
 }
 

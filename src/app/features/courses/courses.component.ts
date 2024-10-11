@@ -23,4 +23,8 @@ export class CoursesComponent implements OnInit {
   onCourseSelected(course: Course) {
     this.selectedCourse = course;
   }
+
+  onSearch(searchInput: string): void {
+    // TODO: add logic to filter courses based on input
+  }
 }

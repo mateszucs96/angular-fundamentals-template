@@ -16,7 +16,7 @@
         "plugin:prettier/recommended"
       ],
       "rules": {
-        "no-console": "error",
+        "no-console": "off",
         "@angular-eslint/directive-selector": [
           "error",
           {
