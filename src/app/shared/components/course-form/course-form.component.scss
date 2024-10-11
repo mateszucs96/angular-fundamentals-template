@@ -23,7 +23,7 @@
 
   &__authors {
     margin-top: 8px;
-    display: flex;
+
 
     &-item {
       margin-right: 10px;
@@ -34,4 +34,9 @@
     margin-left: 4px;
     cursor: pointer;
   }
+}
+
+.course__panel {
+  display: flex;
+  justify-content: space-between;
 }

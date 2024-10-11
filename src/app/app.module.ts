@@ -9,6 +9,7 @@ import { CoursesStoreService } from '@app/services/courses-store.service';
 import { CoursesService } from '@app/services/courses.service';
 
 import { CoursesModule } from '@features/courses/courses.module';
+import { SessionStorageService } from '@app/auth/services/session-storage.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,10 @@ import { CoursesModule } from '@features/courses/courses.module';
     NotAuthorizedGuard,
     CoursesService,
     CoursesStoreService,
+    // {
+    //   provide: Window,
+    //   useValue: window,
+    // },
   ],
   bootstrap: [AppComponent],
 })
