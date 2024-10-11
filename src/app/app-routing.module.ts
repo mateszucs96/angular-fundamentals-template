@@ -7,14 +7,36 @@ import {
 } from '@shared/components';
 import { CourseInfoComponent } from '@features/course-info/course-info.component';
 import { NgModule } from '@angular/core';
+import { NotAuthorizedGuard } from '@app/auth/guards/not-authorized.guard';
+import { AuthorizedGuard } from '@app/auth/guards/authorized.guard';
 
 export const routes: Routes = [
-  { path: '', component: CoursesComponent },
-  { path: 'login', component: LoginFormComponent },
-  { path: 'registration', component: RegistrationFormComponent },
-  { path: 'courses/add', component: CourseFormComponent },
-  { path: 'courses/:id', component: CourseInfoComponent },
-  { path: 'courses/edit:id', component: CourseFormComponent },
+  { path: 'courses', component: CoursesComponent, canMatch: [AuthorizedGuard] },
+  {
+    path: 'login',
+    component: LoginFormComponent,
+    canActivate: [NotAuthorizedGuard],
+  },
+  {
+    path: 'registration',
+    component: RegistrationFormComponent,
+    canActivate: [NotAuthorizedGuard],
+  },
+  {
+    path: 'courses/add',
+    component: CourseFormComponent,
+    canMatch: [AuthorizedGuard],
+  },
+  {
+    path: 'courses/:id',
+    component: CourseInfoComponent,
+    canMatch: [AuthorizedGuard],
+  },
+  {
+    path: 'courses/edit:id',
+    component: CourseFormComponent,
+    canMatch: [AuthorizedGuard],
+  },
 ];
 
 @NgModule({
