@@ -1,6 +1,7 @@
 <div class="app-header">
   <img alt="logo" src="assets/logo.svg" />
-  <div class="app-header__panel">
+  <div *ngIf="isAuthorized" class="app-header__panel">
+    <p>{{ username }}</p>
     <ng-content></ng-content>
   </div>
 </div>

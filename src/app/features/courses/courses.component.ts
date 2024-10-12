@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Course } from '@shared/models/course.model';
 import { CoursesStoreService } from '@app/services/courses-store.service';
 import { Observable } from 'rxjs';
+import { UserStoreService } from '@app/user/services/user-store.service';
 
 @Component({
   selector: 'app-courses',
@@ -13,11 +14,12 @@ export class CoursesComponent implements OnInit {
   courses!: Course[];
   selectedCourse!: Course | null;
 
-  constructor(private coursesStoreService: CoursesStoreService) {}
+  constructor(private coursesStoreService: CoursesStoreService, private userService: UserStoreService) {}
 
   ngOnInit() {
     this.coursesStoreService.getAll();
     this.coursesStoreService.courses$.subscribe(data => (this.courses = data));
+    this.userService.getUser();
   }
 
   onSearch(searchInput: string): void {

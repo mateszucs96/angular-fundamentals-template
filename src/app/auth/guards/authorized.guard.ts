@@ -20,7 +20,7 @@ export class AuthorizedGuard implements CanMatch {
   // Add your code here
   canMatch(route: Route, segments: UrlSegment[]): MaybeAsync<GuardResult> {
     const isAuthorized = this.authService.isAuthorised;
-
+    console.log(isAuthorized)
     if (isAuthorized) {
       return true;
     } else {

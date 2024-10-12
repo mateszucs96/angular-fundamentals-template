@@ -6,6 +6,7 @@ import { ButtonText, ButtonType, IconNames } from '@shared/models/button.model';
 import { mockedAuthorsList } from '@shared/mocks/mocks';
 import { Author } from '@shared/models/author.model';
 import { v4 as uuidv4 } from 'uuid';
+import { UserStoreService } from '@app/user/services/user-store.service';
 
 @Component({
   selector: 'app-course-form',
@@ -21,7 +22,8 @@ export class CourseFormComponent {
 
   constructor(
     public fb: FormBuilder,
-    public library: FaIconLibrary
+    public library: FaIconLibrary,
+    private userStoreService: UserStoreService
   ) {
     library.addIconPacks(fas);
     this.buildForm();

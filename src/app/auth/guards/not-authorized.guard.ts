@@ -21,12 +21,11 @@ export class NotAuthorizedGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const isAuthorized = this.authService.isAuthorised;
-
+    console.log(isAuthorized);
     if (!isAuthorized) {
       return true;
     } else {
       return this.router.createUrlTree(['/courses']);
     }
   }
-  // Add your code here
 }

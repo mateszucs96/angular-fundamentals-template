@@ -9,6 +9,7 @@ import { CourseInfoComponent } from '@features/course-info/course-info.component
 import { NgModule } from '@angular/core';
 import { NotAuthorizedGuard } from '@app/auth/guards/not-authorized.guard';
 import { AuthorizedGuard } from '@app/auth/guards/authorized.guard';
+import { AdminGuard } from '@app/user/guards/admin.guard';
 
 export const routes: Routes = [
   { path: 'courses', component: CoursesComponent, canMatch: [AuthorizedGuard] },
@@ -25,7 +26,7 @@ export const routes: Routes = [
   {
     path: 'courses/add',
     component: CourseFormComponent,
-    canMatch: [AuthorizedGuard],
+    canActivate: [AdminGuard],
   },
   {
     path: 'courses/:id',
@@ -36,6 +37,7 @@ export const routes: Routes = [
     path: 'courses/edit:id',
     component: CourseFormComponent,
     canMatch: [AuthorizedGuard],
+    canActivate: [AdminGuard],
   },
 ];
 

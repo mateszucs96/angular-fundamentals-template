@@ -4,6 +4,7 @@ import { SessionStorageService } from '@app/auth/services/session-storage.servic
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '@app/auth/services/auth.service';
+import { UserStoreService } from '@app/user/services/user-store.service';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +14,20 @@ import { AuthService } from '@app/auth/services/auth.service';
 export class AppComponent {
   title = 'courses-app';
   protected readonly ButtonText = ButtonText;
+  isAuthorized!: boolean;
 
   constructor(
-    private sessionStorage: SessionStorageService,
-    private http: HttpClient,
-    private authService: AuthService
-  ) {}
+    private userStoreService: UserStoreService,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.userStoreService.getUser();
+    this.authService.isAuthorized$.subscribe(
+      value => (this.isAuthorized = value)
+    );
+  }
+
+  onLogout() {
+    this.authService.logout();
+  }
 }

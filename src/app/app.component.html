@@ -1,6 +1,7 @@
 <app-header>
-  <p>Username</p>
-  <app-button [buttonText]="ButtonText.logout"></app-button>
+  <app-button
+    [buttonText]="ButtonText.logout"
+    (click)="onLogout()"></app-button>
 </app-header>
 <div class="app-root">
   <!--  Info component-->

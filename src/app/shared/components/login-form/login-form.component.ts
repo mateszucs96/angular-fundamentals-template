@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ButtonText, ButtonType, IconNames } from '@shared/models/button.model';
 import { AuthService } from '@app/auth/services/auth.service';
 import { SessionStorageService } from '@app/auth/services/session-storage.service';
+import { UserStoreService } from '@app/user/services/user-store.service';
 
 @Component({
   selector: 'app-login-form',
@@ -18,18 +19,19 @@ export class LoginFormComponent {
   password = '';
 
   constructor(
-    private sessionService: SessionStorageService,
+    private userStoreService: UserStoreService,
     private authService: AuthService
   ) {
-    console.log(this.authService.isAuthorised);
+    this.userStoreService.getUser();
   }
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
       form.control.markAllAsTouched();
     }
-    this.authService.login(form.value).subscribe();
-    this.authService.isAuthorised = true;
-    console.log(this.authService.isAuthorised);
+    this.authService.login(form.value).subscribe(() => {
+      this.userStoreService.getUser();
+      this.authService.isAuthorised = true;
+    });
   }
 }

@@ -4,6 +4,7 @@ import { User } from '@shared/models/user.model';
 import { environment } from '../../../environments/environment';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { SessionStorageService } from '@app/auth/services/session-storage.service';
+import { Router } from '@angular/router';
 
 interface LoginResponse {
   result: string;
@@ -19,7 +20,8 @@ export class AuthService {
 
   constructor(
     private sessionService: SessionStorageService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router,
   ) {
     const token = this.sessionService.getToken();
 
@@ -38,12 +40,13 @@ export class AuthService {
   }
 
   logout() {
-    // Add your code here
+    this.sessionService.deleteToken();
+    this.isAuthorized$$.next(false);
+    this.router.navigate(['/login']);
   }
 
-  register(user: any) {
-    // replace 'any' with the required interface
-    // Add your code here
+  register(user: User) {
+    return this.http.post(`${this.API_URL}`, user);
   }
 
   get isAuthorised() {
