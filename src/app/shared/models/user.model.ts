@@ -5,3 +5,9 @@ export interface User {
   id: string;
   role: string;
 }
+
+export interface UserRegistration {
+  email: string;
+  name: string;
+  password: string;
+}

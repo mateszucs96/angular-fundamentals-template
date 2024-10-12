@@ -60,7 +60,8 @@
     <div class="form__action">
       <app-button
         [buttonType]="ButtonType.Submit"
-        [buttonText]="ButtonText.signUp"></app-button>
+        [buttonText]="ButtonText.signUp"
+        (click)="onSubmit()"></app-button>
     </div>
     <div class="form__text">
       If you have an account you may

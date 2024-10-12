@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from '@shared/models/user.model';
+import { User, UserRegistration } from '@shared/models/user.model';
 import { environment } from '../../../environments/environment';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { SessionStorageService } from '@app/auth/services/session-storage.service';
@@ -21,7 +21,7 @@ export class AuthService {
   constructor(
     private sessionService: SessionStorageService,
     private http: HttpClient,
-    private router: Router,
+    private router: Router
   ) {
     const token = this.sessionService.getToken();
 
@@ -45,8 +45,9 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  register(user: User) {
-    return this.http.post(`${this.API_URL}`, user);
+  register(user: UserRegistration) {
+    console.log(user);
+    return this.http.post(`${this.API_URL}register`, user);
   }
 
   get isAuthorised() {

@@ -18,8 +18,7 @@ export class AppComponent {
 
   constructor(
     private userStoreService: UserStoreService,
-    private authService: AuthService,
-    private router: Router
+    private authService: AuthService
   ) {
     this.userStoreService.getUser();
     this.authService.isAuthorized$.subscribe(

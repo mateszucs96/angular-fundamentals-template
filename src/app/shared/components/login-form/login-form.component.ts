@@ -4,6 +4,7 @@ import { ButtonText, ButtonType, IconNames } from '@shared/models/button.model';
 import { AuthService } from '@app/auth/services/auth.service';
 import { SessionStorageService } from '@app/auth/services/session-storage.service';
 import { UserStoreService } from '@app/user/services/user-store.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -20,18 +21,18 @@ export class LoginFormComponent {
 
   constructor(
     private userStoreService: UserStoreService,
-    private authService: AuthService
-  ) {
-    this.userStoreService.getUser();
-  }
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
       form.control.markAllAsTouched();
+      return;
     }
     this.authService.login(form.value).subscribe(() => {
-      this.userStoreService.getUser();
       this.authService.isAuthorised = true;
+      this.router.navigate(['/courses']);
     });
   }
 }

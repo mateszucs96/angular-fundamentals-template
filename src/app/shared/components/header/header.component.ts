@@ -18,9 +18,7 @@ export class HeaderComponent {
       value => (this.isAuthorized = value)
     );
     this.userStoreService.name$.subscribe(value => {
-      if (value) {
-        this.username = value;
-      }
+      value ? (this.username = value) : (this.username = '');
     });
   }
 }
