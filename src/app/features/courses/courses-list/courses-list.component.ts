@@ -8,7 +8,7 @@ import { IconNames } from '@shared/models/button.model';
   styleUrls: ['./courses-list.component.scss'],
 })
 export class CoursesListComponent {
-  @Input() courses!: { course: Course; authorsNames: string[] }[];
+  @Input() courses!: Course[];
   @Input() authorsNames!: string[];
   @Input() isEditable = true;
 

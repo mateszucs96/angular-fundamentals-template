@@ -4,6 +4,7 @@ import { Course } from '@shared/models/course.model';
 import { ButtonText } from '@shared/components';
 import { CoursesService } from '@app/services/courses.service';
 import { Router } from '@angular/router';
+import { CoursesStoreService } from '@app/services/courses-store.service';
 
 @Component({
   selector: 'app-course-card',
@@ -13,17 +14,15 @@ import { Router } from '@angular/router';
 export class CourseCardComponent {
   @Input() course!: Course;
   @Input() isEditable = true;
-  @Input() authorsNames: string[] = [];
-  @Output() showCourse = new EventEmitter<Course>();
   protected readonly ButtonText = ButtonText;
 
   constructor(
-    private coursesService: CoursesService,
+    private coursesStoreService: CoursesStoreService,
     private router: Router
   ) {}
 
   clickOnShow(course: Course) {
-    this.coursesService.selectedCourse.emit(course);
+    this.coursesStoreService.getCourse(course.id);
     this.router.navigate(['/courses/' + course.id]);
   }
 }

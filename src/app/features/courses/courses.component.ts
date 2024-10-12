@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { mockedAuthorsList, mockedCoursesList } from '@shared/mocks/mocks';
 import { Course } from '@shared/models/course.model';
-import { mapAuthorIdsToNames } from '@app/utilities/author-utils';
-import { CoursesService } from '@app/services/courses.service';
+import { CoursesStoreService } from '@app/services/courses-store.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-courses',
@@ -10,19 +9,15 @@ import { CoursesService } from '@app/services/courses.service';
   styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent implements OnInit {
-  mappedCourses: { course: Course; authorsNames: string[] }[] = [];
-  selectedCourse!: Course;
+  // mappedCourses: { course: Course; authorsNames: string[] }[] = [];
+  courses!: Course[];
+  selectedCourse!: Course | null;
 
-  constructor(private coursesService: CoursesService) {}
+  constructor(private coursesStoreService: CoursesStoreService) {}
 
   ngOnInit() {
-    this.mappedCourses = this.coursesService.getAll().map(course => ({
-      course,
-      authorsNames: mapAuthorIdsToNames(course.authors, mockedAuthorsList),
-    }));
-    this.coursesService.selectedCourse.subscribe((course: Course) => {
-      this.selectedCourse = course;
-    });
+    this.coursesStoreService.getAll();
+    this.coursesStoreService.courses$.subscribe(data => (this.courses = data));
   }
 
   onSearch(searchInput: string): void {

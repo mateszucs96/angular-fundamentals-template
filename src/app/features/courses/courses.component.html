@@ -9,6 +9,6 @@
   <app-search
     [placeholder]="'Input text'"
     (search)="onSearch($event)"></app-search>
-  <app-courses-list *ngIf="!selectedCourse" [courses]="mappedCourses">
+  <app-courses-list *ngIf="!selectedCourse" [courses]="courses">
   </app-courses-list>
 </ng-template>

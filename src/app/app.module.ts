@@ -11,7 +11,8 @@ import { CoursesService } from '@app/services/courses.service';
 import { CoursesModule } from '@features/courses/courses.module';
 import { AppRoutingModule } from '@app/app-routing.module';
 import { SessionStorageService } from '@app/auth/services/session-storage.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { TokenInterceptor } from '@app/auth/interceptors/token.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +29,11 @@ import { HttpClientModule } from '@angular/common/http';
     NotAuthorizedGuard,
     CoursesService,
     CoursesStoreService,
-
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
     {
       provide: Window,
       useValue: window,
