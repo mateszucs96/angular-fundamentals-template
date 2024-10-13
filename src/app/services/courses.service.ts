@@ -26,8 +26,7 @@ export class CoursesService {
   }
 
   editCourse(id: string, course: Course) {
-    // Add your code here
-    return this.http.put<Course[]>(`${this.API_URL}/courses/${id}`, course, {});
+    return this.http.put<Course[]>(`${this.API_URL}/courses/${id}`, course);
   }
 
   getCourse(id: string): Observable<{ result: Course }> {

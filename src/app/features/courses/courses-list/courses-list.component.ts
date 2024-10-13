@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Course } from '@shared/models/course.model';
 import { IconNames } from '@shared/models/button.model';
+import { CoursesStoreService } from '@app/services/courses-store.service';
 
 @Component({
   selector: 'app-courses-list',
@@ -17,4 +18,12 @@ export class CoursesListComponent {
   @Output() deleteCourse = new EventEmitter();
 
   protected readonly IconNames = IconNames;
+
+  onEditCourse(course: Course) {
+    this.editCourse.emit(course);
+  }
+
+  onShowCourse(course: Course) {
+    this.showCourse.emit(course);
+  }
 }

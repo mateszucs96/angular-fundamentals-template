@@ -53,8 +53,9 @@ export class CoursesStoreService {
   }
 
   editCourse(id: string, course: any) {
-    // replace 'any' with the required interface
-    // Add your code here
+    this.coursesService
+      .editCourse(id, course)
+      .subscribe(() => console.log(id, course));
   }
 
   deleteCourse(id: string) {
@@ -83,8 +84,8 @@ export class CoursesStoreService {
   }
 
   getAuthorById(id: string) {
-   // this.coursesService.getAuthorById(id).subscribe(author => {
-   //   this.
-   // })
+    // this.coursesService.getAuthorById(id).subscribe(author => {
+    //   this.
+    // })
   }
 }

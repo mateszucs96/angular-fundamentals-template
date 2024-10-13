@@ -15,19 +15,16 @@ import { UserStoreService } from '@app/user/services/user-store.service';
 export class CourseCardComponent {
   @Input() course!: Course;
   @Input() isEditable = true;
+  @Output() clickOnEdit = new EventEmitter<Course>();
+  @Output() clickOnShow = new EventEmitter<Course>();
   protected readonly ButtonText = ButtonText;
   isAdmin!: boolean;
 
-  constructor(
-    private coursesStoreService: CoursesStoreService,
-    private router: Router,
-    private userStoreService: UserStoreService
-  ) {
-    this.isAdmin = userStoreService.isAdmin;
+  onShowCourse() {
+    this.clickOnShow.emit(this.course);
   }
 
-  clickOnShow(course: Course) {
-    this.coursesStoreService.getCourse(course.id);
-    this.router.navigate(['/courses/' + course.id]);
+  onEditCourse(course: Course) {
+    this.clickOnEdit.emit(course);
   }
 }
