@@ -22,13 +22,9 @@ import { RouterLink } from '@angular/router';
 const components = [
   HeaderComponent,
   ButtonComponent,
-  InfoComponent,
   SearchComponent,
   ModalComponent,
   CourseCardComponent,
-  LoginFormComponent,
-  RegistrationFormComponent,
-  CourseFormComponent,
   DurationPipe,
   CustomDatePipe,
   EmailValidatorDirective,

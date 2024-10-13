@@ -30,9 +30,12 @@ export class LoginFormComponent {
       form.control.markAllAsTouched();
       return;
     }
-    this.authService.login(form.value).subscribe(() => {
-      this.authService.isAuthorised = true;
-      this.router.navigate(['/courses']);
+    this.authService.login(form.value).subscribe({
+      next: () => {
+        this.authService.isAuthorised = true;
+        this.router.navigate(['/courses']);
+      },
+      error: err => console.error(err),
     });
   }
 }

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '@app/auth/services/auth.service';
 import { UserStoreService } from '@app/user/services/user-store.service';
+import { CoursesStoreService } from '@app/services/courses-store.service';
 
 @Component({
   selector: 'app-root',
@@ -18,12 +19,14 @@ export class AppComponent {
 
   constructor(
     private userStoreService: UserStoreService,
-    private authService: AuthService
+    private authService: AuthService,
+    private coursesStoreService: CoursesStoreService
   ) {
     this.userStoreService.getUser();
     this.authService.isAuthorized$.subscribe(
       value => (this.isAuthorized = value)
     );
+    this.coursesStoreService.getAll();
   }
 
   onLogout() {
