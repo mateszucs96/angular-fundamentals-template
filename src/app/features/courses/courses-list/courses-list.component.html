@@ -4,7 +4,9 @@
       [course]="courseAndAuthors"
       [isEditable]="isEditable"
       (clickOnShow)="onShowCourse(courseAndAuthors)">
-      <app-button [iconName]="IconNames.TrashCan"></app-button>
+      <app-button
+        [iconName]="IconNames.TrashCan"
+        (click)="onDeleteCourse(courseAndAuthors)"></app-button>
       <app-button
         [iconName]="IconNames.Pencil"
         (click)="onEditCourse(courseAndAuthors)"></app-button>

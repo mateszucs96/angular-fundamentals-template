@@ -42,6 +42,10 @@ export class CoursesComponent implements OnInit {
     this.router.navigate(['courses/edit', course.id]);
   }
 
+  onDeleteCourse(course: Course) {
+    this.coursesStoreService.deleteCourse(course.id);
+  }
+
   onSearch(searchInput: string): void {
     // TODO: add logic to filter courses based on input
   }

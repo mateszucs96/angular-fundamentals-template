@@ -25,7 +25,10 @@ export class CoursesListComponent {
   }
 
   onEditCourse(course: Course) {
-    console.log(course);
     this.editCourse.emit(course);
+  }
+
+  onDeleteCourse(course: Course) {
+    this.deleteCourse.emit(course);
   }
 }
