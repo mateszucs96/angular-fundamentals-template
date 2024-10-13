@@ -14,7 +14,10 @@ export class CoursesComponent implements OnInit {
   courses!: Course[];
   selectedCourse!: Course | null;
 
-  constructor(private coursesStoreService: CoursesStoreService, private userService: UserStoreService) {}
+  constructor(
+    private coursesStoreService: CoursesStoreService,
+    private userService: UserStoreService
+  ) {}
 
   ngOnInit() {
     this.coursesStoreService.getAll();
