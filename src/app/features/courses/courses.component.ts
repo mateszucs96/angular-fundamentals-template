@@ -14,6 +14,8 @@ export class CoursesComponent implements OnInit {
   // mappedCourses: { course: Course; authorsNames: string[] }[] = [];
   courses!: Course[];
   selectedCourse!: Course | null;
+  courseForEdit!: Course;
+  isAdmin!: boolean;
 
   constructor(
     private coursesStoreService: CoursesStoreService,
@@ -23,14 +25,21 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit() {
     this.coursesStoreService.getAll();
+    this.coursesStoreService.getAllAuthors();
     this.coursesStoreService.courses$.subscribe(data => (this.courses = data));
     this.userService.getUser();
+    this.userService.isAdmin$.subscribe(isAdmin => (this.isAdmin = isAdmin));
   }
 
   onShowCourse(course: Course) {
     this.selectedCourse = course;
     console.log(this.selectedCourse);
     this.router.navigate(['courses', course.id]);
+  }
+
+  onEditCourse(course: Course) {
+    this.courseForEdit = course;
+    this.router.navigate(['courses/edit', course.id]);
   }
 
   onSearch(searchInput: string): void {

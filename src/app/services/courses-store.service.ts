@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, finalize } from 'rxjs';
+import { BehaviorSubject, finalize, Observable, tap } from 'rxjs';
 import { Course } from '@shared/models/course.model';
 import { CoursesService } from '@app/services/courses.service';
 import { error } from '@angular/compiler-cli/src/transformers/util';
@@ -30,13 +30,11 @@ export class CoursesStoreService {
       .pipe(finalize(() => this.isLoading$$.next(false)))
       .subscribe(courses => {
         this.courses$$.next(courses.result);
-        console.log(courses.result);
       });
   }
 
   createCourse(course: Course) {
     this.coursesService.createCourse(course).subscribe(course => {
-      console.log(course);
       this.courses$$.next([...this.courses$$.getValue(), course]);
     });
   }
@@ -52,10 +50,20 @@ export class CoursesStoreService {
       });
   }
 
-  editCourse(id: string, course: any) {
-    this.coursesService
-      .editCourse(id, course)
-      .subscribe(() => console.log(id, course));
+  editCourse(id: string, course: Course): Observable<{ result: Course }> {
+    return this.coursesService.editCourse(id, course).pipe(
+      tap(updatedCourse => {
+        console.log(updatedCourse);
+        const currentCourses = this.courses$$.value;
+
+        const idx = currentCourses.findIndex(course => course.id === id);
+        const updatedCourses = [...currentCourses];
+        updatedCourses[idx] = updatedCourse.result;
+        console.log(updatedCourse.result);
+        console.log(updatedCourses);
+        this.courses$$.next(updatedCourses);
+      })
+    );
   }
 
   deleteCourse(id: string) {
@@ -76,6 +84,7 @@ export class CoursesStoreService {
     // Add your code here
     this.coursesService.getAllAuthors().subscribe(authors => {
       this.authors$$.next(authors.result);
+      this.authors$.subscribe(value => console.log(value));
     });
   }
 

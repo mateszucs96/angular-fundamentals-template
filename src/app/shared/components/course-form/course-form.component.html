@@ -13,10 +13,10 @@
           formControlName="title" />
         <div *ngIf="title?.invalid && title?.touched" id="titleErrorMessage">
           <span *ngIf="title?.errors?.['minlength']" class="text-danger"
-            >Title must be at least 2 characters long.</span
+          >Title must be at least 2 characters long.</span
           >
           <span *ngIf="title?.errors?.['required']" class="text-danger"
-            >Title is required.</span
+          >Title is required.</span
           >
         </div>
       </div>
@@ -33,10 +33,10 @@
           *ngIf="description?.invalid && description?.touched"
           id="descriptionErrorMessage">
           <span *ngIf="description?.errors?.['minlength']" class="text-danger"
-            >Description must be at least 2 characters long.</span
+          >Description must be at least 2 characters long.</span
           >
           <span *ngIf="description?.errors?.['required']" class="text-danger"
-            >Description is required.</span
+          >Description is required.</span
           >
         </div>
       </div>
@@ -57,10 +57,10 @@
           id="durationErrorMessage"
           *ngIf="duration?.invalid && duration?.touched">
           <span *ngIf="duration?.errors?.['required']" class="text-danger"
-            >Duration is required.</span
+          >Duration is required.</span
           >
           <span *ngIf="duration?.errors?.['min']" class="text-danger"
-            >Duration should not be less than 0.</span
+          >Duration should not be less than 0.</span
           >
         </div>
       </div>
@@ -84,10 +84,10 @@
             id="authorErrorMessage"
             *ngIf="newAuthor?.invalid && newAuthor?.touched">
             <span *ngIf="newAuthor?.errors?.['pattern']" class="text-danger"
-              >New author should contain only latin letters and numbers.</span
+            >New author should contain only latin letters and numbers.</span
             >
             <span *ngIf="newAuthor?.errors?.['minlength']" class="text-danger"
-              >New author should not be less than 2 characters.</span
+            >New author should not be less than 2 characters.</span
             >
           </div>
         </div>
@@ -124,7 +124,9 @@
         <app-button [buttonText]="ButtonText.cancel"></app-button>
         <app-button
           [buttonType]="ButtonType.Submit"
-          [buttonText]="ButtonText.createCourse"
+          [buttonText]="
+            isEditMode ? ButtonText.editCourse : ButtonText.createCourse
+          "
           (click)="onSubmit()"></app-button>
       </div>
     </div>

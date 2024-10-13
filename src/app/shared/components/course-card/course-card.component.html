@@ -7,7 +7,7 @@
     <div class="course-card__info-text">
       <div>
         <b>Authors: </b>
-        {{ course.authors.join(',') }}
+        {{ course.authors | authors }}
       </div>
       <div>
         <b>Duration: </b
@@ -24,7 +24,7 @@
       <app-button
         [buttonText]="ButtonText.showCourse"
         (click)="onShowCourse()"></app-button>
-      <div *ngIf="isAdmin" class="course-card__buttons">
+      <div *ngIf="isEditable" class="course-card__buttons">
         <ng-content></ng-content>
       </div>
     </div>

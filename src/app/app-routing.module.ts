@@ -8,8 +8,8 @@ import { AdminGuard } from '@app/user/guards/admin.guard';
 export const routes: Routes = [
   {
     path: 'courses',
-    component: CoursesComponent,
-    canMatch: [AuthorizedGuard],
+    loadChildren: () =>
+      import('./features/courses/courses.module').then(m => m.CoursesModule),
   },
   {
     path: 'login',
@@ -28,35 +28,11 @@ export const routes: Routes = [
     canActivate: [NotAuthorizedGuard],
   },
   {
-    path: 'courses/add',
-    loadChildren: () =>
-      import('./shared/components/course-form/course-form.module').then(
-        m => m.CourseFormModule
-      ),
-    canActivate: [AdminGuard],
-  },
-  {
-    path: 'courses/:id',
-    loadChildren: () =>
-      import('./features/course-info/course-info.module').then(
-        m => m.CourseInfoModule
-      ),
-    canMatch: [AuthorizedGuard],
-  },
-  {
-    path: 'courses/edit:id',
-    loadChildren: () =>
-      import('./shared/components/course-form/course-form.module').then(
-        m => m.CourseFormModule
-      ),
-    canMatch: [AuthorizedGuard],
-    canActivate: [AdminGuard],
-  },
-  {
     path: '',
     redirectTo: '/courses',
     pathMatch: 'full',
   },
+  { path: '**', redirectTo: '/courses' },
 ];
 
 @NgModule({

@@ -11,19 +11,21 @@ import { CoursesStoreService } from '@app/services/courses-store.service';
 export class CoursesListComponent {
   @Input() courses!: Course[];
   @Input() authorsNames!: string[];
-  @Input() isEditable = true;
+  @Input() isEditable!: boolean;
 
   @Output() showCourse = new EventEmitter<Course>();
-  @Output() editCourse = new EventEmitter();
+  @Output() editCourse = new EventEmitter<Course>();
   @Output() deleteCourse = new EventEmitter();
 
   protected readonly IconNames = IconNames;
 
-  onEditCourse(course: Course) {
-    this.editCourse.emit(course);
+  onShowCourse(course: Course) {
+    console.log(course);
+    this.showCourse.emit(course);
   }
 
-  onShowCourse(course: Course) {
-    this.showCourse.emit(course);
+  onEditCourse(course: Course) {
+    console.log(course);
+    this.editCourse.emit(course);
   }
 }

@@ -1,6 +1,7 @@
 export enum ButtonText {
   showCourse = 'show course',
   createCourse = 'create course',
+  editCourse = 'edit course',
   createAuthor = 'create author',
   search = 'search',
   back = 'back',

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -9,14 +9,18 @@ import { v4 as uuidv4 } from 'uuid';
 import { UserStoreService } from '@app/user/services/user-store.service';
 import { CoursesStoreService } from '@app/services/courses-store.service';
 import { Course } from '@shared/models/course.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CoursesService } from '@app/services/courses.service';
 
 @Component({
   selector: 'app-course-form',
   templateUrl: './course-form.component.html',
   styleUrls: ['./course-form.component.scss'],
 })
-export class CourseFormComponent {
+export class CourseFormComponent implements OnInit {
   courseForm!: FormGroup;
+  isEditMode!: boolean;
+  courseId!: string;
   allAuthors: Author[] = [];
   courseAuthors: Author[] = [];
   protected readonly ButtonText = ButtonText;
@@ -25,13 +29,31 @@ export class CourseFormComponent {
   constructor(
     public fb: FormBuilder,
     public library: FaIconLibrary,
-    private courseStoreService: CoursesStoreService
+    private courseStoreService: CoursesStoreService,
+    private courseService: CoursesService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     library.addIconPacks(fas);
     this.buildForm();
-    this.courseStoreService.getAllAuthors();
     this.courseStoreService.authors$.subscribe(authors => {
       this.allAuthors = authors;
+    });
+  }
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.isEditMode = true;
+        this.courseId = params['id'];
+        this.loadCourseForEdit();
+      }
+    });
+  }
+
+  loadCourseForEdit() {
+    this.courseService.getCourse(this.courseId).subscribe(course => {
+      this.courseForm.patchValue(course.result);
     });
   }
 
@@ -90,10 +112,19 @@ export class CourseFormComponent {
   onSubmit() {
     if (!this.courseForm.valid) {
       this.courseForm.markAllAsTouched();
+      return;
     }
 
-    this.courseStoreService.createCourse(this.courseForm.value);
-    console.log(this.courseForm.value);
+    if (this.isEditMode) {
+      this.courseStoreService
+        .editCourse(this.courseId, this.courseForm.value)
+        .subscribe(course => {
+          console.log(course);
+        });
+    } else {
+      this.courseStoreService.createCourse(this.courseForm.value);
+    }
+    this.router.navigate(['/courses']);
   }
 
   get title() {

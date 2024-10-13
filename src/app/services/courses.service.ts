@@ -25,8 +25,11 @@ export class CoursesService {
     return this.http.post<Course>(`${this.API_URL}/courses/add`, course);
   }
 
-  editCourse(id: string, course: Course) {
-    return this.http.put<Course[]>(`${this.API_URL}/courses/${id}`, course);
+  editCourse(id: string, course: Course): Observable<{ result: Course }> {
+    return this.http.put<{ result: Course }>(
+      `${this.API_URL}/courses/${id}`,
+      course
+    );
   }
 
   getCourse(id: string): Observable<{ result: Course }> {

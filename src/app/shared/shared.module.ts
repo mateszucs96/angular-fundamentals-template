@@ -18,6 +18,7 @@ import { CustomDatePipe } from './pipes/custom-date.pipe';
 import { EmailValidatorDirective } from '@shared/directives/email.directive';
 import { TogglePasswordDirective } from './directives/toggle-password.directive';
 import { RouterLink } from '@angular/router';
+import { AuthorsPipe } from './pipes/authors.pipe';
 
 const components = [
   HeaderComponent,
@@ -32,7 +33,7 @@ const components = [
 ];
 
 @NgModule({
-  declarations: [components],
+  declarations: [components, AuthorsPipe],
   imports: [
     CommonModule,
     FontAwesomeModule,
