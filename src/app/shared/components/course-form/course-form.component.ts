@@ -3,12 +3,9 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText, ButtonType, IconNames } from '@shared/models/button.model';
-import { mockedAuthorsList } from '@shared/mocks/mocks';
 import { Author } from '@shared/models/author.model';
 import { v4 as uuidv4 } from 'uuid';
-import { UserStoreService } from '@app/user/services/user-store.service';
 import { CoursesStoreService } from '@app/services/courses-store.service';
-import { Course } from '@shared/models/course.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from '@app/services/courses.service';
 
@@ -51,12 +48,6 @@ export class CourseFormComponent implements OnInit {
     });
   }
 
-  loadCourseForEdit() {
-    this.courseService.getCourse(this.courseId).subscribe(course => {
-      this.courseForm.patchValue(course.result);
-    });
-  }
-
   buildForm() {
     this.courseForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(2)]],
@@ -69,6 +60,31 @@ export class CourseFormComponent implements OnInit {
         ],
       }),
       duration: [0, [Validators.required, Validators.min(0)]],
+    });
+  }
+
+  loadCourseForEdit() {
+    this.courseService.getCourse(this.courseId).subscribe(course => {
+      this.courseForm.patchValue({
+        title: course.result.title,
+        description: course.result.description,
+        duration: course.result.duration,
+      });
+      const authorsFormArray = this.courseForm.get('authors') as FormArray;
+      const courseAuthorsArray = this.allAuthors.filter(author => {
+        if (course.result.authors.includes(author.id)) {
+          return author;
+        } else {
+          return;
+        }
+      });
+
+      course.result.authors.forEach((author: string) => {
+        authorsFormArray.push(this.fb.control(author));
+        this.allAuthors = this.allAuthors.filter(athr => athr.id !== author);
+      });
+      courseAuthorsArray.forEach(author => this.courseAuthors.push(author));
+      console.log(this.courseForm.value);
     });
   }
 
@@ -85,7 +101,6 @@ export class CourseFormComponent implements OnInit {
     );
 
     this.allAuthors.push(author);
-
     const index = this.courseAuthorsArray.controls.findIndex(
       c => c.value.id === author.id
     );
@@ -99,12 +114,12 @@ export class CourseFormComponent implements OnInit {
 
     if (authorName && authorName.length >= 2) {
       const newAuthor = {
-        id: uuidv4(),
         name: authorName,
       };
       console.log(newAuthor);
+      this.courseStoreService.createAuthor(newAuthor);
 
-      this.allAuthors.push(newAuthor);
+      this.allAuthors.push(<Author>newAuthor.name);
       this.newAuthorGroup.reset();
     }
   }
@@ -120,10 +135,12 @@ export class CourseFormComponent implements OnInit {
         .editCourse(this.courseId, this.courseForm.value)
         .subscribe(course => {
           console.log(course);
+          console.log(this.courseForm.value);
         });
     } else {
       this.courseStoreService.createCourse(this.courseForm.value);
     }
+
     this.router.navigate(['/courses']);
   }
 

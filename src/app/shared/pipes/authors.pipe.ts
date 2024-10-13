@@ -19,7 +19,6 @@ export class AuthorsPipe implements PipeTransform {
   transform(value: string[]): string[] {
     return value.map(id => {
       const author = this.authors.find(author => {
-        console.log(id);
         return author.id === id;
       });
 

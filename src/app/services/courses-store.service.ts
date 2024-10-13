@@ -9,15 +9,17 @@ import { Author } from '@shared/models/author.model';
   providedIn: 'root',
 })
 export class CoursesStoreService {
+  private isLoading$$ = new BehaviorSubject<boolean>(false);
   private selectedCourse$$ = new BehaviorSubject<Course | null>(null);
+  private selectedAuthor$$ = new BehaviorSubject<Author | null>(null);
   private courses$$ = new BehaviorSubject<Course[]>([]);
   private authors$$ = new BehaviorSubject<Author[]>([]);
-  private isLoading$$ = new BehaviorSubject<boolean>(false);
 
-  public courses$ = this.courses$$.asObservable();
-  public authors$ = this.authors$$.asObservable();
   public isLoading$ = this.isLoading$$.asObservable();
   public selectedCourse$ = this.selectedCourse$$.asObservable();
+  public selectedAuthor$ = this.selectedAuthor$$.asObservable();
+  public courses$ = this.courses$$.asObservable();
+  public authors$ = this.authors$$.asObservable();
 
   constructor(private coursesService: CoursesService) {}
 
@@ -88,13 +90,15 @@ export class CoursesStoreService {
     });
   }
 
-  createAuthor(name: string) {
-    // Add your code here
+  createAuthor({ name }: { name: string }) {
+    this.coursesService.createAuthor({ name }).subscribe(author => {
+      this.authors$$.next([...this.authors$$.getValue(), author.result]);
+    });
   }
 
   getAuthorById(id: string) {
-    // this.coursesService.getAuthorById(id).subscribe(author => {
-    //   this.
-    // })
+    this.coursesService
+      .getAuthorById(id)
+      .subscribe(author => this.selectedAuthor$$.next(author.result));
   }
 }

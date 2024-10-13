@@ -37,9 +37,12 @@ export class CoursesService {
     // return <Course>this.courses.find(course => course.id === id);
   }
 
-  deleteCourse(id: string) {
+  deleteCourse(id: string): Observable<{ result: Course }> {
     // Add your code here
-    return this.http.delete<Course>(`${this.API_URL}/courses/${id}`, {});
+    return this.http.delete<{ result: Course }>(
+      `${this.API_URL}/courses/${id}`,
+      {}
+    );
   }
 
   filterCourses(value: string) {
@@ -55,13 +58,15 @@ export class CoursesService {
     return this.http.get<{ result: Author[] }>(`${this.API_URL}/authors/all`);
   }
 
-  createAuthor(name: string) {
+  createAuthor({ name }: { name: string }): Observable<{ result: Author }> {
     // Add your code here
-    return this.http.post<Author>(`${this.API_URL}/authors/add`, name);
+    return this.http.post<{ result: Author }>(`${this.API_URL}/authors/add`, {
+      name,
+    });
   }
 
-  getAuthorById(id: string) {
+  getAuthorById(id: string): Observable<{ result: Author }> {
     // Add your code here
-    return this.http.delete<Author>(`${this.API_URL}/authors/${id}`);
+    return this.http.get<{ result: Author }>(`${this.API_URL}/authors/${id}`);
   }
 }

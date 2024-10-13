@@ -8,15 +8,11 @@ import { ButtonText } from '@shared/components';
   templateUrl: './course-card.component.html',
   styleUrls: ['./course-card.component.scss'],
 })
-export class CourseCardComponent implements OnInit {
+export class CourseCardComponent {
   @Input() course!: Course;
   @Input() isEditable!: boolean;
   @Output() clickOnShow = new EventEmitter<Course>();
   protected readonly ButtonText = ButtonText;
-
-  ngOnInit() {
-    console.log(this.course);
-  }
 
   onShowCourse() {
     this.clickOnShow.emit(this.course);
