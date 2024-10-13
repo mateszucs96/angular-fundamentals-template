@@ -14,8 +14,6 @@ import { AuthService } from '@app/auth/services/auth.service';
 import { SessionStorageService } from '@app/auth/services/session-storage.service';
 
 @Injectable()
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 export class TokenInterceptor implements HttpInterceptor {
   constructor(
     private sessionService: SessionStorageService,

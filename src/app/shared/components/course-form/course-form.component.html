@@ -124,7 +124,8 @@
         <app-button [buttonText]="ButtonText.cancel"></app-button>
         <app-button
           [buttonType]="ButtonType.Submit"
-          [buttonText]="ButtonText.createCourse"></app-button>
+          [buttonText]="ButtonText.createCourse"
+          (click)="onSubmit()"></app-button>
       </div>
     </div>
   </div>

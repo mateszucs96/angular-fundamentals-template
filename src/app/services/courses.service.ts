@@ -22,15 +22,7 @@ export class CoursesService {
   }
 
   createCourse(course: Course) {
-    // replace 'any' with the required interface
-    // Add your code here
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-
-    return this.http.post<Course>(`${this.API_URL}/courses/add`, course, {
-      headers,
-    });
+    return this.http.post<Course>(`${this.API_URL}/courses/add`, course);
   }
 
   editCourse(id: string, course: Course) {
@@ -56,9 +48,9 @@ export class CoursesService {
     );
   }
 
-  getAllAuthors() {
+  getAllAuthors(): Observable<{ result: Author[] }> {
     // Add your code here
-    return this.http.get<Author[]>(`${this.API_URL}/authors`);
+    return this.http.get<{ result: Author[] }>(`${this.API_URL}/authors/all`);
   }
 
   createAuthor(name: string) {

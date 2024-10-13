@@ -7,6 +7,8 @@ import { mockedAuthorsList } from '@shared/mocks/mocks';
 import { Author } from '@shared/models/author.model';
 import { v4 as uuidv4 } from 'uuid';
 import { UserStoreService } from '@app/user/services/user-store.service';
+import { CoursesStoreService } from '@app/services/courses-store.service';
+import { Course } from '@shared/models/course.model';
 
 @Component({
   selector: 'app-course-form',
@@ -15,7 +17,7 @@ import { UserStoreService } from '@app/user/services/user-store.service';
 })
 export class CourseFormComponent {
   courseForm!: FormGroup;
-  allAuthors: Author[] = [...mockedAuthorsList];
+  allAuthors: Author[] = [];
   courseAuthors: Author[] = [];
   protected readonly ButtonText = ButtonText;
   protected readonly IconNames = IconNames;
@@ -23,17 +25,21 @@ export class CourseFormComponent {
   constructor(
     public fb: FormBuilder,
     public library: FaIconLibrary,
-    private userStoreService: UserStoreService
+    private courseStoreService: CoursesStoreService
   ) {
     library.addIconPacks(fas);
     this.buildForm();
+    this.courseStoreService.getAllAuthors();
+    this.courseStoreService.authors$.subscribe(authors => {
+      this.allAuthors = authors;
+    });
   }
 
   buildForm() {
     this.courseForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(2)]],
       description: ['', [Validators.required, Validators.minLength(2)]],
-      courseAuthors: this.fb.array([]),
+      authors: this.fb.array([]),
       newAuthor: this.fb.group({
         author: [
           '',
@@ -48,7 +54,7 @@ export class CourseFormComponent {
     this.allAuthors = this.allAuthors.filter(athr => athr.id !== author.id);
 
     this.courseAuthors.push(author);
-    this.courseAuthorsArray.push(this.fb.control(author));
+    this.courseAuthorsArray.push(this.fb.control(author.id));
   }
 
   removeAuthorFromCourse(author: Author) {
@@ -81,6 +87,15 @@ export class CourseFormComponent {
     }
   }
 
+  onSubmit() {
+    if (!this.courseForm.valid) {
+      this.courseForm.markAllAsTouched();
+    }
+
+    this.courseStoreService.createCourse(this.courseForm.value);
+    console.log(this.courseForm.value);
+  }
+
   get title() {
     return this.courseForm.get('title');
   }
@@ -98,17 +113,11 @@ export class CourseFormComponent {
   }
 
   get courseAuthorsArray() {
-    return this.courseForm.get('courseAuthors') as FormArray;
+    return this.courseForm.get('authors') as FormArray;
   }
 
   get newAuthorGroup() {
     return this.courseForm.get('newAuthor') as FormGroup;
-  }
-
-  onSubmit() {
-    if (!this.courseForm.valid) {
-      this.courseForm.markAllAsTouched();
-    }
   }
 
   protected readonly ButtonType = ButtonType;

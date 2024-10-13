@@ -3,6 +3,7 @@ import { BehaviorSubject, finalize } from 'rxjs';
 import { Course } from '@shared/models/course.model';
 import { CoursesService } from '@app/services/courses.service';
 import { error } from '@angular/compiler-cli/src/transformers/util';
+import { Author } from '@shared/models/author.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,9 +11,11 @@ import { error } from '@angular/compiler-cli/src/transformers/util';
 export class CoursesStoreService {
   private selectedCourse$$ = new BehaviorSubject<Course | null>(null);
   private courses$$ = new BehaviorSubject<Course[]>([]);
+  private authors$$ = new BehaviorSubject<Author[]>([]);
   private isLoading$$ = new BehaviorSubject<boolean>(false);
 
   public courses$ = this.courses$$.asObservable();
+  public authors$ = this.authors$$.asObservable();
   public isLoading$ = this.isLoading$$.asObservable();
   public selectedCourse$ = this.selectedCourse$$.asObservable();
 
@@ -33,6 +36,7 @@ export class CoursesStoreService {
 
   createCourse(course: Course) {
     this.coursesService.createCourse(course).subscribe(course => {
+      console.log(course);
       this.courses$$.next([...this.courses$$.getValue(), course]);
     });
   }
@@ -69,6 +73,9 @@ export class CoursesStoreService {
 
   getAllAuthors() {
     // Add your code here
+    this.coursesService.getAllAuthors().subscribe(authors => {
+      this.authors$$.next(authors.result);
+    });
   }
 
   createAuthor(name: string) {
@@ -76,6 +83,8 @@ export class CoursesStoreService {
   }
 
   getAuthorById(id: string) {
-    // Add your code here
+   // this.coursesService.getAuthorById(id).subscribe(author => {
+   //   this.
+   // })
   }
 }
