@@ -34,10 +34,6 @@ import { TokenInterceptor } from '@app/auth/interceptors/token.interceptor';
       useClass: TokenInterceptor,
       multi: true,
     },
-    {
-      provide: Window,
-      useValue: window,
-    },
   ],
   bootstrap: [AppComponent],
 })
