@@ -6,8 +6,9 @@ import { RouterModule, Routes } from '@angular/router';
 const courseInfoRoute: Routes = [{ path: '', component: CourseInfoComponent }];
 
 @NgModule({
+  declarations: [CourseInfoComponent],
   imports: [SharedModule, RouterModule.forChild(courseInfoRoute)],
   providers: [],
-  exports: [RouterModule],
+  exports: [CourseInfoComponent, RouterModule],
 })
 export class CourseInfoModule {}

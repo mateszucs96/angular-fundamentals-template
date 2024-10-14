@@ -140,7 +140,6 @@ export class CourseFormComponent implements OnInit {
     } else {
       this.courseStoreService.createCourse(this.courseForm.value);
     }
-
     this.router.navigate(['/courses']);
   }
 

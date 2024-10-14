@@ -4,9 +4,7 @@ import {
   CanActivate,
   Router,
   RouterStateSnapshot,
-  UrlTree,
 } from '@angular/router';
-import { map, Observable } from 'rxjs';
 import { UserStoreService } from '@app/user/services/user-store.service';
 
 @Injectable({
@@ -17,6 +15,7 @@ export class AdminGuard implements CanActivate {
     private userStoreService: UserStoreService,
     private router: Router
   ) {}
+
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let isAdmin = false;
     this.userStoreService.isAdmin$.subscribe(isAdminStatus => {
