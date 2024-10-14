@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { EmailValidatorDirective } from '@shared/directives/email.directive';
 import { ButtonText, ButtonType } from '@shared/models/button.model';
 import { AuthService } from '@app/auth/services/auth.service';
 import { Router } from '@angular/router';
@@ -36,6 +35,7 @@ export class RegistrationFormComponent implements OnInit {
       next: () => {
         this.router.navigate(['/login']);
       },
+      // eslint-disable-next-line no-console
       error: err => console.log(err),
     });
   }

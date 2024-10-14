@@ -2,8 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Course } from '@shared/models/course.model';
 import { ButtonText } from '@shared/components';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { CoursesService } from '@app/services/courses.service';
 import { CoursesStoreService } from '@app/services/courses-store.service';
 
 @Component({

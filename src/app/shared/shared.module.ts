@@ -5,12 +5,8 @@ import { ModalComponent } from './components/modal/modal.component';
 import {
   HeaderComponent,
   ButtonComponent,
-  InfoComponent,
   SearchComponent,
   CourseCardComponent,
-  LoginFormComponent,
-  RegistrationFormComponent,
-  CourseFormComponent,
 } from './components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DurationPipe } from './pipes/duration.pipe';

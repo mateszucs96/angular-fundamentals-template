@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, finalize, Observable, tap } from 'rxjs';
 import { Course } from '@shared/models/course.model';
 import { CoursesService } from '@app/services/courses.service';
-import { error } from '@angular/compiler-cli/src/transformers/util';
 import { Author } from '@shared/models/author.model';
 
 @Injectable({
@@ -55,14 +54,10 @@ export class CoursesStoreService {
   editCourse(id: string, course: Course): Observable<{ result: Course }> {
     return this.coursesService.editCourse(id, course).pipe(
       tap(updatedCourse => {
-        console.log(updatedCourse);
         const currentCourses = this.courses$$.value;
-
         const idx = currentCourses.findIndex(course => course.id === id);
         const updatedCourses = [...currentCourses];
         updatedCourses[idx] = updatedCourse.result;
-        console.log(updatedCourse.result);
-        console.log(updatedCourses);
         this.courses$$.next(updatedCourses);
       })
     );
@@ -86,7 +81,6 @@ export class CoursesStoreService {
     // Add your code here
     this.coursesService.getAllAuthors().subscribe(authors => {
       this.authors$$.next(authors.result);
-      this.authors$.subscribe(value => console.log(value));
     });
   }
 

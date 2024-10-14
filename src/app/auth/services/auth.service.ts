@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User, UserRegistration } from '@shared/models/user.model';
-import { environment } from '../../../environments/environment';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { SessionStorageService } from '@app/auth/services/session-storage.service';
 import { Router } from '@angular/router';
@@ -46,17 +45,14 @@ export class AuthService {
   }
 
   register(user: UserRegistration) {
-    console.log(user);
     return this.http.post(`${this.API_URL}register`, user);
   }
 
   get isAuthorised() {
-    // Add your code here. Get isAuthorized$$ value
     return this.isAuthorized$$.getValue();
   }
 
   set isAuthorised(value: boolean) {
-    // Add your code here. Change isAuthorized$$ value
     this.isAuthorized$$.next(value);
   }
 

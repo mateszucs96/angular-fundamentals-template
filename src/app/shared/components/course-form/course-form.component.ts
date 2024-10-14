@@ -4,11 +4,9 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText, ButtonType, IconNames } from '@shared/models/button.model';
 import { Author } from '@shared/models/author.model';
-import { v4 as uuidv4 } from 'uuid';
 import { CoursesStoreService } from '@app/services/courses-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from '@app/services/courses.service';
-import { relative } from '@angular/compiler-cli';
 
 @Component({
   selector: 'app-course-form',
@@ -92,7 +90,6 @@ export class CourseFormComponent implements OnInit {
         this.allAuthors = this.allAuthors.filter(athr => athr.id !== author);
       });
       courseAuthorsArray.forEach(author => this.courseAuthors.push(author));
-      console.log(this.courseForm.value);
     });
   }
 
@@ -122,7 +119,6 @@ export class CourseFormComponent implements OnInit {
       const newAuthor = {
         name: authorName,
       };
-      console.log(newAuthor);
       this.courseStoreService.createAuthor(newAuthor);
 
       this.allAuthors.push(<Author>newAuthor.name);
@@ -141,12 +137,7 @@ export class CourseFormComponent implements OnInit {
     }
 
     if (this.isEditMode) {
-      this.courseStoreService
-        .editCourse(this.courseId, this.courseForm.value)
-        .subscribe(course => {
-          console.log(course);
-          console.log(this.courseForm.value);
-        });
+      this.courseStoreService.editCourse(this.courseId, this.courseForm.value);
     } else {
       this.courseStoreService.createCourse(this.courseForm.value);
     }

@@ -2,8 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ButtonText, ButtonType, IconNames } from '@shared/models/button.model';
 import { AuthService } from '@app/auth/services/auth.service';
-import { SessionStorageService } from '@app/auth/services/session-storage.service';
-import { UserStoreService } from '@app/user/services/user-store.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,7 +18,6 @@ export class LoginFormComponent {
   password = '';
 
   constructor(
-    private userStoreService: UserStoreService,
     private authService: AuthService,
     private router: Router
   ) {}
@@ -35,6 +32,7 @@ export class LoginFormComponent {
         this.authService.isAuthorised = true;
         this.router.navigate(['/courses']);
       },
+      // eslint-disable-next-line no-console
       error: err => console.error(err),
     });
   }

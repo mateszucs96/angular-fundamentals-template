@@ -14,7 +14,6 @@ export class SearchComponent {
 
   onSearch(): void {
     this.search.emit(this.searchQuery);
-    console.log(this.searchQuery);
   }
 
   protected readonly ButtonType = ButtonType;

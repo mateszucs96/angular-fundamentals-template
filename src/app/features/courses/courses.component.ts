@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from '@shared/models/course.model';
 import { CoursesStoreService } from '@app/services/courses-store.service';
-import { Observable } from 'rxjs';
 import { UserStoreService } from '@app/user/services/user-store.service';
 import { Router } from '@angular/router';
 import { ButtonText } from '@shared/models/button.model';
@@ -34,7 +33,6 @@ export class CoursesComponent implements OnInit {
 
   onShowCourse(course: Course) {
     this.selectedCourse = course;
-    console.log(this.selectedCourse);
     this.router.navigate(['courses', course.id]);
   }
 
@@ -53,7 +51,6 @@ export class CoursesComponent implements OnInit {
 
   onSearch(searchInput: string): void {
     this.coursesStoreService.filterCourses(searchInput);
-    this.coursesStoreService.courses$.subscribe(data => console.log(data));
   }
 
   protected readonly ButtonText = ButtonText;

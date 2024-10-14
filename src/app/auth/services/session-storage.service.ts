@@ -9,6 +9,7 @@ const TOKEN = 'SESSION_TOKEN'; // Use this constant for the session storage entr
 })
 export class SessionStorageService {
   constructor(@Inject(WINDOW) private window: Window) {}
+
   setToken(token: string) {
     this.window.sessionStorage.setItem(TOKEN, token);
     this.getToken();
@@ -20,9 +21,5 @@ export class SessionStorageService {
 
   deleteToken() {
     this.window.sessionStorage.removeItem(TOKEN);
-  }
-
-  logToken() {
-    console.log(this.window.sessionStorage);
   }
 }

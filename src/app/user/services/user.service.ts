@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { User } from '@shared/models/user.model';
 import { Observable } from 'rxjs';
-import { SessionStorageService } from '@app/auth/services/session-storage.service';
 
 @Injectable({
   providedIn: 'root',

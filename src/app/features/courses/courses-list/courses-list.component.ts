@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Course } from '@shared/models/course.model';
 import { IconNames } from '@shared/models/button.model';
-import { CoursesStoreService } from '@app/services/courses-store.service';
 
 @Component({
   selector: 'app-courses-list',
@@ -20,7 +19,6 @@ export class CoursesListComponent {
   protected readonly IconNames = IconNames;
 
   onShowCourse(course: Course) {
-    console.log(course);
     this.showCourse.emit(course);
   }
 
