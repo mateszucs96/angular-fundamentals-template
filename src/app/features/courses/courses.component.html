@@ -11,6 +11,7 @@
       [placeholder]="'Input text'"
       (search)="onSearch($event)"></app-search>
     <app-button
+      *ngIf="isAdmin"
       [buttonText]="ButtonText.addNewCourse"
       (click)="onClickAddCourse()"></app-button>
   </div>

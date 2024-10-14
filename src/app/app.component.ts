@@ -20,13 +20,17 @@ export class AppComponent {
   constructor(
     private userStoreService: UserStoreService,
     private authService: AuthService,
-    private coursesStoreService: CoursesStoreService
+    private coursesStoreService: CoursesStoreService,
+    private router: Router
   ) {
     this.userStoreService.getUser();
     this.authService.isAuthorized$.subscribe(
       value => (this.isAuthorized = value)
     );
     this.coursesStoreService.getAll();
+    if (!this.isAuthorized) {
+      this.router.navigate(['login']);
+    }
   }
 
   onLogout() {
