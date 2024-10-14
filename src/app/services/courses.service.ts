@@ -1,8 +1,6 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Course } from '@shared/models/course.model';
-import { mockedCoursesList } from '@shared/mocks/mocks';
-import { environment } from '../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Author } from '@shared/models/author.model';
 import { Observable } from 'rxjs';
 
@@ -11,13 +9,10 @@ import { Observable } from 'rxjs';
 })
 export class CoursesService {
   private API_URL = 'http://localhost:4000';
-  private courses: Course[] = [...mockedCoursesList];
-  selectedCourse = new EventEmitter<Course>();
 
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<{ result: Course[] }> {
-    // return this.courses.slice()
     return this.http.get<{ result: Course[] }>(`${this.API_URL}/courses/all`);
   }
 
@@ -34,7 +29,6 @@ export class CoursesService {
 
   getCourse(id: string): Observable<{ result: Course }> {
     return this.http.get<{ result: Course }>(`${this.API_URL}/courses/${id}`);
-    // return <Course>this.courses.find(course => course.id === id);
   }
 
   deleteCourse(id: string): Observable<{ result: Course }> {
@@ -45,28 +39,23 @@ export class CoursesService {
     );
   }
 
-  filterCourses(value: string) {
-    // Add your code here
-    return this.http.get<Course[]>(
-      `${this.API_URL}/courses/filter?${value}`,
-      {}
+  filterCourses(value: string): Observable<{ result: Course[] }> {
+    return this.http.get<{ result: Course[] }>(
+      `${this.API_URL}/courses/filter?title=${value}`
     );
   }
 
   getAllAuthors(): Observable<{ result: Author[] }> {
-    // Add your code here
     return this.http.get<{ result: Author[] }>(`${this.API_URL}/authors/all`);
   }
 
   createAuthor({ name }: { name: string }): Observable<{ result: Author }> {
-    // Add your code here
     return this.http.post<{ result: Author }>(`${this.API_URL}/authors/add`, {
       name,
     });
   }
 
   getAuthorById(id: string): Observable<{ result: Author }> {
-    // Add your code here
     return this.http.get<{ result: Author }>(`${this.API_URL}/authors/${id}`);
   }
 }

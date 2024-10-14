@@ -78,7 +78,7 @@ export class CoursesStoreService {
 
   filterCourses(value: string) {
     this.coursesService.filterCourses(value).subscribe(courses => {
-      this.courses$$.next(courses);
+      this.courses$$.next(courses.result);
     });
   }
 

@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { CoursesStoreService } from '@app/services/courses-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from '@app/services/courses.service';
+import { relative } from '@angular/compiler-cli';
 
 @Component({
   selector: 'app-course-form',
@@ -32,10 +33,6 @@ export class CourseFormComponent implements OnInit {
     private router: Router
   ) {
     library.addIconPacks(fas);
-    this.buildForm();
-    this.courseStoreService.authors$.subscribe(authors => {
-      this.allAuthors = authors;
-    });
   }
 
   ngOnInit() {
@@ -43,7 +40,14 @@ export class CourseFormComponent implements OnInit {
       if (params['id']) {
         this.isEditMode = true;
         this.courseId = params['id'];
+        this.buildForm();
         this.loadCourseForEdit();
+      } else {
+        this.courseStoreService.getAllAuthors();
+        this.courseStoreService.authors$.subscribe(authors => {
+          this.allAuthors = authors;
+        });
+        this.buildForm();
       }
     });
   }
@@ -122,6 +126,10 @@ export class CourseFormComponent implements OnInit {
       this.allAuthors.push(<Author>newAuthor.name);
       this.newAuthorGroup.reset();
     }
+  }
+
+  onClickCancel() {
+    this.router.navigate(['courses']);
   }
 
   onSubmit() {

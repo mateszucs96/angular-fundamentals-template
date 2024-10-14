@@ -1,10 +1,7 @@
-import { OnInit, Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { CoursesStoreService } from '@app/services/courses-store.service';
-import { Course } from '@shared/models/course.model';
 
 import { Author } from '@shared/models/author.model';
-import { mockedAuthorsList } from '@shared/mocks/mocks';
-import { Observable } from 'rxjs';
 
 @Pipe({
   name: 'authors',

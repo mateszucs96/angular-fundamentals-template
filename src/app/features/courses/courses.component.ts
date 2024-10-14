@@ -47,6 +47,7 @@ export class CoursesComponent implements OnInit {
   }
 
   onSearch(searchInput: string): void {
-    // TODO: add logic to filter courses based on input
+    this.coursesStoreService.filterCourses(searchInput);
+    this.coursesStoreService.courses$.subscribe(data => console.log(data));
   }
 }
