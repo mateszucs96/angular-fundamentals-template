@@ -4,6 +4,7 @@ import { CoursesStoreService } from '@app/services/courses-store.service';
 import { Observable } from 'rxjs';
 import { UserStoreService } from '@app/user/services/user-store.service';
 import { Router } from '@angular/router';
+import { ButtonText } from '@shared/models/button.model';
 
 @Component({
   selector: 'app-courses',
@@ -46,8 +47,14 @@ export class CoursesComponent implements OnInit {
     this.coursesStoreService.deleteCourse(course.id);
   }
 
+  onClickAddCourse() {
+    this.router.navigate(['courses/add']);
+  }
+
   onSearch(searchInput: string): void {
     this.coursesStoreService.filterCourses(searchInput);
     this.coursesStoreService.courses$.subscribe(data => console.log(data));
   }
+
+  protected readonly ButtonText = ButtonText;
 }

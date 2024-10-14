@@ -1,4 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { CoursesService } from '@app/services/courses.service';
+import { CoursesStoreService } from '@app/services/courses-store.service';
+import { Author } from '@shared/models/author.model';
 
 @Pipe({
   name: 'duration',

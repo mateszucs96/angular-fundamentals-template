@@ -6,9 +6,14 @@
 </ng-container>
 
 <ng-template #courseList>
-  <app-search
-    [placeholder]="'Input text'"
-    (search)="onSearch($event)"></app-search>
+  <div class="search__panel">
+    <app-search
+      [placeholder]="'Input text'"
+      (search)="onSearch($event)"></app-search>
+    <app-button
+      [buttonText]="ButtonText.addNewCourse"
+      (click)="onClickAddCourse()"></app-button>
+  </div>
   <app-courses-list
     *ngIf="!selectedCourse"
     [courses]="courses"

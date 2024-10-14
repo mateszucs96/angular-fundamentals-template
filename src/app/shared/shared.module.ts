@@ -41,6 +41,6 @@ const components = [
     ReactiveFormsModule,
     RouterLink,
   ],
-  exports: [components],
+  exports: [components, AuthorsPipe],
 })
 export class SharedModule {}

@@ -17,7 +17,9 @@
     </div>
     <div>
       <b>Authors: </b
-      ><span class="course-info__info-authors">{{ course?.authors }}</span>
+      ><span class="course-info__info-authors">{{
+        course?.authors! | authors
+      }}</span>
     </div>
   </div>
 </div>
