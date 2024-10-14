@@ -23,6 +23,7 @@ export class CourseFormComponent implements OnInit {
   courseAuthors: Author[] = [];
   protected readonly ButtonText = ButtonText;
   protected readonly IconNames = IconNames;
+  protected readonly ButtonType = ButtonType;
 
   constructor(
     public fb: FormBuilder,
@@ -40,7 +41,9 @@ export class CourseFormComponent implements OnInit {
       if (params['id']) {
         this.isEditMode = true;
         this.courseId = params['id'];
-        this.buildForm();
+        this.courseStoreService.authors$.subscribe(authors => {
+          this.allAuthors = authors;
+        });
         this.loadCourseForEdit();
       } else {
         this.courseStoreService.getAllAuthors();
@@ -68,6 +71,7 @@ export class CourseFormComponent implements OnInit {
   }
 
   loadCourseForEdit() {
+    this.buildForm();
     this.courseService.getCourse(this.courseId).subscribe(course => {
       this.courseForm.patchValue({
         title: course.result.title,
@@ -105,12 +109,10 @@ export class CourseFormComponent implements OnInit {
     );
 
     this.allAuthors.push(author);
-    const index = this.courseAuthorsArray.controls.findIndex(
-      c => c.value.id === author.id
-    );
-    if (index >= 0) {
-      this.courseAuthorsArray.removeAt(index);
-    }
+    const index = this.courseAuthorsArray.controls.findIndex(c => {
+      return c.value === author.id;
+    });
+    this.courseAuthorsArray.removeAt(index);
   }
 
   createNewAuthor() {
@@ -174,6 +176,4 @@ export class CourseFormComponent implements OnInit {
   get newAuthorGroup() {
     return this.courseForm.get('newAuthor') as FormGroup;
   }
-
-  protected readonly ButtonType = ButtonType;
 }
