@@ -135,9 +135,10 @@ export class CourseFormComponent implements OnInit {
       this.courseForm.markAllAsTouched();
       return;
     }
-
     if (this.isEditMode) {
-      this.courseStoreService.editCourse(this.courseId, this.courseForm.value);
+      this.courseStoreService
+        .editCourse(this.courseId, this.courseForm.value)
+        .subscribe();
     } else {
       this.courseStoreService.createCourse(this.courseForm.value);
     }
