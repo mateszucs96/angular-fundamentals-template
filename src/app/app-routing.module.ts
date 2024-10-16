@@ -37,8 +37,8 @@ export const routes: Routes = [
       import('./features/course-info/course-info.module').then(
         m => m.CourseInfoModule
       ),
-    canLoad: [AuthorizedGuard],
-    canActivate: [NotAuthorizedGuard],
+    // canLoad: [AuthorizedGuard],
+    // canActivate: [NotAuthorizedGuard],
   },
   {
     path: 'courses/edit/:id',
