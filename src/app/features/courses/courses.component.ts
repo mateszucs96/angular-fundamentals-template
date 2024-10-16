@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Course } from '@shared/models/course.model';
 import { CoursesStoreService } from '@app/services/courses-store.service';
 import { UserStoreService } from '@app/user/services/user-store.service';
 import { Router } from '@angular/router';
 import { ButtonText } from '@shared/models/button.model';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss'],
 })
-export class CoursesComponent implements OnInit {
-  // mappedCourses: { course: Course; authorsNames: string[] }[] = [];
+export class CoursesComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<boolean> = new Subject();
   courses!: Course[];
   selectedCourse!: Course | null;
-  courseForEdit!: Course;
   isAdmin!: boolean;
+
+  protected readonly ButtonText = ButtonText;
 
   constructor(
     private coursesStoreService: CoursesStoreService,
@@ -25,10 +27,16 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit() {
     this.coursesStoreService.getAll();
-    this.coursesStoreService.getAllAuthors();
-    this.coursesStoreService.courses$.subscribe(data => (this.courses = data));
     this.userService.getUser();
-    this.userService.isAdmin$.subscribe(isAdmin => (this.isAdmin = isAdmin));
+    this.coursesStoreService.getAllAuthors();
+    this.coursesStoreService.courses$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(data => {
+        this.courses = data;
+      });
+    this.userService.isAdmin$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(isAdmin => (this.isAdmin = isAdmin));
   }
 
   onShowCourse(course: Course) {
@@ -37,7 +45,6 @@ export class CoursesComponent implements OnInit {
   }
 
   onEditCourse(course: Course) {
-    this.courseForEdit = course;
     this.router.navigate(['courses/edit', course.id]);
   }
 
@@ -50,8 +57,14 @@ export class CoursesComponent implements OnInit {
   }
 
   onSearch(searchInput: string): void {
-    this.coursesStoreService.filterCourses(searchInput);
+    const trimmedSearchInput = searchInput.trim();
+    if (!trimmedSearchInput) return;
+
+    this.coursesStoreService.filterCourses(trimmedSearchInput);
   }
 
-  protected readonly ButtonText = ButtonText;
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
 }

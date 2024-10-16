@@ -12,7 +12,6 @@ export class SessionStorageService {
 
   setToken(token: string) {
     this.window.sessionStorage.setItem(TOKEN, token);
-    this.getToken();
   }
 
   getToken(): string | null {

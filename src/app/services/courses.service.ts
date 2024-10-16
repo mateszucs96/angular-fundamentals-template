@@ -1,61 +1,93 @@
 import { Injectable } from '@angular/core';
 import { Course } from '@shared/models/course.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEvent } from '@angular/common/http';
 import { Author } from '@shared/models/author.model';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
+import { BASE_URL } from '../../environments/environment';
+import { ApiEndpoint } from '@shared/models/urlPath.model';
+import { Router } from '@angular/router';
+import {
+  AllAuthorsResponse,
+  AllCourseResponse,
+  AuthorResponse,
+  CreateAuthorResponse,
+  CreateCourseResponse,
+  EditCourseResponse,
+  FilterCourseResponse,
+} from '@shared/models/apiResponse.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CoursesService {
-  private API_URL = 'http://localhost:4000';
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
-  constructor(private http: HttpClient) {}
-
-  getAll(): Observable<{ result: Course[] }> {
-    return this.http.get<{ result: Course[] }>(`${this.API_URL}/courses/all`);
+  getAll(): Observable<AllCourseResponse> {
+    return this.http.get<AllCourseResponse>(
+      `${BASE_URL}${ApiEndpoint.COURSES}/all`
+    );
   }
 
-  createCourse(course: Course) {
-    return this.http.post<Course>(`${this.API_URL}/courses/add`, course);
-  }
-
-  editCourse(id: string, course: Course): Observable<{ result: Course }> {
-    return this.http.put<{ result: Course }>(
-      `${this.API_URL}/courses/${id}`,
+  createCourse(course: Course): Observable<CreateCourseResponse> {
+    return this.http.post<CreateCourseResponse>(
+      `${BASE_URL}${ApiEndpoint.COURSES}/add`,
       course
     );
   }
 
-  getCourse(id: string): Observable<{ result: Course }> {
-    return this.http.get<{ result: Course }>(`${this.API_URL}/courses/${id}`);
+  editCourse(id: string, course: Course): Observable<EditCourseResponse> {
+    return this.http.put<EditCourseResponse>(
+      `${BASE_URL}${ApiEndpoint.COURSES}/${id}`,
+      course
+    );
   }
 
-  deleteCourse(id: string): Observable<{ result: Course }> {
+  getCourse(id: string): Observable<any> {
+    return this.http
+      .get<{ result: Course }>(`${BASE_URL}${ApiEndpoint.COURSES}/${id}`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            // If 404 error, navigate back to the course list
+            this.router.navigate(['/courses']);
+          }
+          return throwError(() => new Error('Course not found'));
+        })
+      );
+  }
+
+  deleteCourse(id: string) {
     // Add your code here
-    return this.http.delete<{ result: Course }>(
-      `${this.API_URL}/courses/${id}`,
-      {}
+    return this.http.delete(`${BASE_URL}${ApiEndpoint.COURSES}/${id}`);
+  }
+
+  filterCourses(value: string): Observable<FilterCourseResponse> {
+    return this.http.get<FilterCourseResponse>(
+      `${BASE_URL}${ApiEndpoint.COURSES}/filter?title=${value}`
     );
   }
 
-  filterCourses(value: string): Observable<{ result: Course[] }> {
-    return this.http.get<{ result: Course[] }>(
-      `${this.API_URL}/courses/filter?title=${value}`
+  getAllAuthors(): Observable<AllAuthorsResponse> {
+    return this.http.get<AllAuthorsResponse>(
+      `${BASE_URL}${ApiEndpoint.AUTHORS}/all`
     );
   }
 
-  getAllAuthors(): Observable<{ result: Author[] }> {
-    return this.http.get<{ result: Author[] }>(`${this.API_URL}/authors/all`);
+  createAuthor({ name }: { name: string }): Observable<CreateAuthorResponse> {
+    return this.http.post<CreateAuthorResponse>(
+      `${BASE_URL}${ApiEndpoint.AUTHORS}/add`,
+      {
+        name,
+      }
+    );
   }
 
-  createAuthor({ name }: { name: string }): Observable<{ result: Author }> {
-    return this.http.post<{ result: Author }>(`${this.API_URL}/authors/add`, {
-      name,
-    });
-  }
-
-  getAuthorById(id: string): Observable<{ result: Author }> {
-    return this.http.get<{ result: Author }>(`${this.API_URL}/authors/${id}`);
+  getAuthorById(id: string): Observable<AuthorResponse> {
+    return this.http.get<AuthorResponse>(
+      `${BASE_URL}${ApiEndpoint.AUTHORS}/${id}`
+    );
   }
 }

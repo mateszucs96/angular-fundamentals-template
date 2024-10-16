@@ -2,13 +2,12 @@ import { NgModule } from '@angular/core';
 import { CourseInfoComponent } from './course-info.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
-
-const courseInfoRoute: Routes = [{ path: '', component: CourseInfoComponent }];
+import { AuthorizedGuard } from '@app/auth/guards/authorized.guard';
+import { CourseInfoRoutingModule } from '@features/course-info/course-info-routing.module';
 
 @NgModule({
   declarations: [CourseInfoComponent],
-  imports: [SharedModule, RouterModule.forChild(courseInfoRoute)],
-  providers: [],
-  exports: [CourseInfoComponent, RouterModule],
+  imports: [CourseInfoRoutingModule, SharedModule],
+  exports: [CourseInfoComponent],
 })
 export class CourseInfoModule {}

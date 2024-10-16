@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class RegistrationFormComponent implements OnInit {
   registrationForm!: FormGroup;
   protected readonly ButtonText = ButtonText;
+  protected readonly ButtonType = ButtonType;
 
   constructor(
     private authService: AuthService,
@@ -51,6 +52,4 @@ export class RegistrationFormComponent implements OnInit {
   get password() {
     return this.registrationForm.get('password');
   }
-
-  protected readonly ButtonType = ButtonType;
 }

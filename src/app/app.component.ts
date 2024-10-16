@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ButtonText } from '@shared/components';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/auth/services/auth.service';
@@ -10,7 +10,7 @@ import { CoursesStoreService } from '@app/services/courses-store.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'courses-app';
   protected readonly ButtonText = ButtonText;
   isAuthorized!: boolean;
@@ -20,15 +20,18 @@ export class AppComponent {
     private authService: AuthService,
     private coursesStoreService: CoursesStoreService,
     private router: Router
-  ) {
-    this.authService.isAuthorized$.subscribe(
-      value => (this.isAuthorized = value)
-    );
-    this.coursesStoreService.getAll();
+  ) {}
+
+  ngOnInit() {
+    this.authService.isAuthorized$.subscribe(value => {
+      this.isAuthorized = value;
+      this.coursesStoreService.getAll();
+    });
     if (!this.isAuthorized) {
       this.router.navigate(['/login']);
     } else {
       this.userStoreService.getUser();
+      this.router.navigate(['courses']);
     }
   }
 

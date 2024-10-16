@@ -3,6 +3,7 @@ import { Course } from '@shared/models/course.model';
 import { ButtonText } from '@shared/components';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesStoreService } from '@app/services/courses-store.service';
+import { UserService } from '@app/user/services/user.service';
 
 @Component({
   selector: 'app-course-info',
@@ -15,11 +16,13 @@ export class CourseInfoComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private routes: Router,
+    private router: Router,
+    private userService: UserService,
     private coursesStoreService: CoursesStoreService
   ) {}
 
   ngOnInit() {
+    this.userService.getUser();
     const courseId = this.route.snapshot.paramMap.get('id');
     if (!courseId) return;
     this.coursesStoreService.getCourse(courseId);
@@ -29,6 +32,6 @@ export class CourseInfoComponent implements OnInit {
   }
 
   onClickBack() {
-    this.routes.navigate(['../'], { relativeTo: this.route.parent });
+    this.router.navigate([''], { relativeTo: this.route.parent });
   }
 }

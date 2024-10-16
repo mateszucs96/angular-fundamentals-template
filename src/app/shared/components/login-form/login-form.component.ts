@@ -30,7 +30,7 @@ export class LoginFormComponent {
     this.authService.login(form.value).subscribe({
       next: () => {
         this.authService.isAuthorised = true;
-        this.router.navigate(['/courses']);
+        this.router.navigate(['/coursesss']);
       },
       // eslint-disable-next-line no-console
       error: err => console.error(err),

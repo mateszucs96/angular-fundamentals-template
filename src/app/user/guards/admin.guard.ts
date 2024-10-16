@@ -11,11 +11,11 @@ export class AdminGuard implements CanActivate {
     private router: Router
   ) {}
 
-  canActivate(): boolean | UrlTree {
-    if (this.userStoreService.isAdmin) {
-      return true;
-    } else {
-      return this.router.createUrlTree(['/courses']);
-    }
+  canActivate() {
+    // if (this.userStoreService.isAdmin) {
+    //   return true;
+    // } else {
+    return this.router.createUrlTree(['/courses']);
+    // }
   }
 }

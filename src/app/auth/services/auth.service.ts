@@ -4,6 +4,8 @@ import { User, UserRegistration } from '@shared/models/user.model';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { SessionStorageService } from '@app/auth/services/session-storage.service';
 import { Router } from '@angular/router';
+import { ApiEndpoint } from '@shared/models/urlPath.model';
+import { BASE_URL } from '../../../environments/environment';
 
 interface LoginResponse {
   result: string;
@@ -13,7 +15,6 @@ interface LoginResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private API_URL = 'http://localhost:4000/';
   private isAuthorized$$ = new BehaviorSubject(false);
   public isAuthorized$ = this.isAuthorized$$.asObservable();
 
@@ -29,23 +30,25 @@ export class AuthService {
 
   login(user: User): Observable<void> {
     // Add your code here
-    return this.http.post<LoginResponse>(`${this.API_URL}login`, user).pipe(
-      map(response => {
-        if (response.result) {
-          this.sessionService.setToken(response.result);
-        }
-      })
-    );
+    return this.http
+      .post<LoginResponse>(`${BASE_URL}${ApiEndpoint.LOGIN}`, user)
+      .pipe(
+        map(response => {
+          if (response.result) {
+            this.sessionService.setToken(response.result);
+          }
+        })
+      );
   }
 
   logout() {
     this.sessionService.deleteToken();
     this.isAuthorized$$.next(false);
-    this.router.navigate(['/login']);
+    this.router.navigate([`/${ApiEndpoint.LOGIN}`]);
   }
 
   register(user: UserRegistration) {
-    return this.http.post(`${this.API_URL}register`, user);
+    return this.http.post(`${BASE_URL}${ApiEndpoint.REGISTER}`, user);
   }
 
   get isAuthorised() {
@@ -54,6 +57,10 @@ export class AuthService {
 
   set isAuthorised(value: boolean) {
     this.isAuthorized$$.next(value);
+  }
+
+  getIsAuthorized() {
+    return this.isAuthorized$;
   }
 
   getLoginUrl() {

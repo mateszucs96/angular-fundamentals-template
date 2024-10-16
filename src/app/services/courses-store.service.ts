@@ -36,7 +36,8 @@ export class CoursesStoreService {
 
   createCourse(course: Course) {
     this.coursesService.createCourse(course).subscribe(course => {
-      this.courses$$.next([...this.courses$$.getValue(), course]);
+      this.courses$$.next([...this.courses$$.getValue(), course.result]);
+      this.getAll();
     });
   }
 
@@ -51,24 +52,28 @@ export class CoursesStoreService {
       });
   }
 
-  editCourse(id: string, course: Course): Observable<{ result: Course }> {
-    return this.coursesService.editCourse(id, course).pipe(
-      tap(updatedCourse => {
+  editCourse(id: string, course: Course) {
+    return this.coursesService
+      .editCourse(id, course)
+      .subscribe(updatedCourse => {
         const currentCourses = this.courses$$.value;
         const idx = currentCourses.findIndex(course => course.id === id);
         const updatedCourses = [...currentCourses];
         updatedCourses[idx] = updatedCourse.result;
         this.courses$$.next(updatedCourses);
-      })
-    );
+        this.getAll();
+      });
   }
 
   deleteCourse(id: string) {
-    this.coursesService.deleteCourse(id).subscribe(() => {
-      const courses = this.courses$$.getValue();
-      const updatedCourse = courses.filter(course => course.id !== id);
-      this.courses$$.next(updatedCourse);
-    });
+    this.coursesService
+      .deleteCourse(id)
+      .subscribe(() =>
+        this.courses$$.next(
+          this.courses$$.value.filter(course => course.id !== id)
+        )
+      );
+    this.getAll();
   }
 
   filterCourses(value: string) {
@@ -88,6 +93,7 @@ export class CoursesStoreService {
     this.coursesService.createAuthor({ name }).subscribe(author => {
       this.authors$$.next([...this.authors$$.getValue(), author.result]);
     });
+    this.getAllAuthors();
   }
 
   getAuthorById(id: string) {

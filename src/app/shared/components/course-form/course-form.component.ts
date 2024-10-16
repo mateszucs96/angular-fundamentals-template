@@ -44,7 +44,6 @@ export class CourseFormComponent implements OnInit {
         });
         this.loadCourseForEdit();
       } else {
-        this.courseStoreService.getAllAuthors();
         this.courseStoreService.authors$.subscribe(authors => {
           this.allAuthors = authors;
         });
@@ -77,13 +76,9 @@ export class CourseFormComponent implements OnInit {
         duration: course.result.duration,
       });
       const authorsFormArray = this.courseForm.get('authors') as FormArray;
-      const courseAuthorsArray = this.allAuthors.filter(author => {
-        if (course.result.authors.includes(author.id)) {
-          return author;
-        } else {
-          return;
-        }
-      });
+      const courseAuthorsArray = this.allAuthors.filter(author =>
+        course.result.authors.includes(author.id)
+      );
 
       course.result.authors.forEach((author: string) => {
         authorsFormArray.push(this.fb.control(author));
@@ -136,9 +131,7 @@ export class CourseFormComponent implements OnInit {
       return;
     }
     if (this.isEditMode) {
-      this.courseStoreService
-        .editCourse(this.courseId, this.courseForm.value)
-        .subscribe();
+      this.courseStoreService.editCourse(this.courseId, this.courseForm.value);
     } else {
       this.courseStoreService.createCourse(this.courseForm.value);
     }

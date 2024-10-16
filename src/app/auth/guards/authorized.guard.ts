@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CanLoad, Router, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanLoad, Router } from '@angular/router';
 import { AuthService } from '@app/auth/services/auth.service';
-
-type GuardResult = boolean | UrlTree;
-type MaybeAsync<T> = T | Observable<T> | Promise<T>;
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,12 +13,17 @@ export class AuthorizedGuard implements CanLoad {
   ) {}
 
   // Add your code here
-  canLoad(): MaybeAsync<GuardResult> {
-    const isAuthorized = this.authService.isAuthorised;
-    if (isAuthorized) {
-      return true;
-    } else {
-      return this.router.createUrlTree(['login']);
-    }
+  canLoad() {
+    return this.authService.isAuthorized$.pipe(
+      tap(isAuth => {
+        if (isAuth) {
+          console.log(isAuth);
+          return true;
+        } else {
+          console.log('f', isAuth);
+          return this.router.navigate(['/login']);
+        }
+      })
+    );
   }
 }
