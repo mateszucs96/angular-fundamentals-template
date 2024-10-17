@@ -13,6 +13,7 @@ import { UserService } from '@app/user/services/user.service';
 export class CourseInfoComponent implements OnInit {
   @Input() course!: Course | null;
   protected readonly ButtonText = ButtonText;
+  public authors$ = this.coursesStoreService.authors$;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,7 +23,6 @@ export class CourseInfoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userService.getUser();
     const courseId = this.route.snapshot.paramMap.get('id');
     if (!courseId) return;
     this.coursesStoreService.getCourse(courseId);

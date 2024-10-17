@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, finalize, Observable, tap } from 'rxjs';
+import { BehaviorSubject, finalize } from 'rxjs';
 import { Course } from '@shared/models/course.model';
 import { CoursesService } from '@app/services/courses.service';
 import { Author } from '@shared/models/author.model';

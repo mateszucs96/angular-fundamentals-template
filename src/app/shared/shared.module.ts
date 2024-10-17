@@ -7,7 +7,6 @@ import {
   ButtonComponent,
   SearchComponent,
   CourseCardComponent,
-  CourseFormComponent,
 } from './components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DurationPipe } from './pipes/duration.pipe';
@@ -31,7 +30,7 @@ const components = [
 ];
 
 @NgModule({
-  declarations: [components],
+  declarations: [components, AuthorsPipe],
   imports: [
     CommonModule,
     FontAwesomeModule,
@@ -39,6 +38,6 @@ const components = [
     ReactiveFormsModule,
     RouterLink,
   ],
-  exports: [components],
+  exports: [components, AuthorsPipe],
 })
 export class SharedModule {}

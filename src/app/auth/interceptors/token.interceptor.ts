@@ -8,15 +8,14 @@ import {
 import { Router } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
 import { SessionStorageService } from '@app/auth/services/session-storage.service';
-import { UserService } from '@app/user/services/user.service';
 import { AuthService } from '@app/auth/services/auth.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   constructor(
     private sessionService: SessionStorageService,
-    private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
@@ -31,8 +30,10 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(cloneRequest).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 || error.status === 403) {
-          this.authService.getIsAuthorized().subscribe(console.log);
-          this.router.navigate(['/login']);
+          this.authService.logout();
+        }
+        if (error.status === 404) {
+          this.router.navigate(['/courses']);
         }
         return throwError(error);
       })

@@ -18,7 +18,7 @@
     <div>
       <b>Authors: </b
       ><span class="course-info__info-authors">{{
-        course?.authors! | authors
+        course?.authors! | authors: (authors$ | async)
       }}</span>
     </div>
   </div>

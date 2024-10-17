@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CanLoad, Router } from '@angular/router';
+import { CanLoad, Route, Router, UrlSegment, UrlTree } from '@angular/router';
 import { AuthService } from '@app/auth/services/auth.service';
-import { tap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,17 +13,20 @@ export class AuthorizedGuard implements CanLoad {
   ) {}
 
   // Add your code here
-  canLoad() {
-    return this.authService.isAuthorized$.pipe(
-      tap(isAuth => {
-        if (isAuth) {
-          console.log(isAuth);
-          return true;
-        } else {
-          console.log('f', isAuth);
-          return this.router.navigate(['/login']);
-        }
-      })
-    );
+  canLoad(
+    route: Route,
+    segments: UrlSegment[]
+  ):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
+    const isAuthorized = this.authService.isAuthorised;
+
+    if (isAuthorized) {
+      return true;
+    } else {
+      return this.router.createUrlTree(['/login']);
+    }
   }
 }

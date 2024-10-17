@@ -5,7 +5,7 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
 import { SessionStorageService } from '@app/auth/services/session-storage.service';
 import { Router } from '@angular/router';
 import { ApiEndpoint } from '@shared/models/urlPath.model';
-import { BASE_URL } from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 interface LoginResponse {
   result: string;
@@ -31,7 +31,7 @@ export class AuthService {
   login(user: User): Observable<void> {
     // Add your code here
     return this.http
-      .post<LoginResponse>(`${BASE_URL}${ApiEndpoint.LOGIN}`, user)
+      .post<LoginResponse>(`${environment.BASE_URL}${ApiEndpoint.LOGIN}`, user)
       .pipe(
         map(response => {
           if (response.result) {
@@ -48,11 +48,19 @@ export class AuthService {
   }
 
   register(user: UserRegistration) {
-    return this.http.post(`${BASE_URL}${ApiEndpoint.REGISTER}`, user);
+    return this.http.post(
+      `${environment.BASE_URL}${ApiEndpoint.REGISTER}`,
+      user
+    );
   }
 
   get isAuthorised() {
-    return this.isAuthorized$$.getValue();
+    const token = this.sessionService.getToken();
+    const isAuthorised = !!token;
+    if (this.isAuthorized$$.value !== isAuthorised) {
+      this.isAuthorized$$.next(isAuthorised);
+    }
+    return isAuthorised;
   }
 
   set isAuthorised(value: boolean) {

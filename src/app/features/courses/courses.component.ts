@@ -40,19 +40,23 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   onShowCourse(course: Course) {
+    this.userService.getUser();
     this.selectedCourse = course;
     this.router.navigate(['courses', course.id]);
   }
 
   onEditCourse(course: Course) {
+    this.userService.getUser();
     this.router.navigate(['courses/edit', course.id]);
   }
 
   onDeleteCourse(course: Course) {
+    this.userService.getUser();
     this.coursesStoreService.deleteCourse(course.id);
   }
 
   onClickAddCourse() {
+    this.userService.getUser();
     this.router.navigate(['courses/add']);
   }
 

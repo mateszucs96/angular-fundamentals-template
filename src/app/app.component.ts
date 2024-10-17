@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
       this.coursesStoreService.getAll();
     });
     if (!this.isAuthorized) {
+      this.userStoreService.getUser();
       this.router.navigate(['/login']);
     } else {
       this.userStoreService.getUser();

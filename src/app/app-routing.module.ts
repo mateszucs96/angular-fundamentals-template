@@ -12,7 +12,7 @@ export const routes: Routes = [
       import('./shared/components/login-form/login-form.module').then(
         m => m.LoginFormModule
       ),
-    // canActivate: [NotAuthorizedGuard],
+    canActivate: [NotAuthorizedGuard],
   },
   {
     path: 'registration',
@@ -20,7 +20,7 @@ export const routes: Routes = [
       import(
         './shared/components/registration-form/registration-form.module'
       ).then(m => m.RegistrationFormModule),
-    // canActivate: [NotAuthorizedGuard],
+    canActivate: [NotAuthorizedGuard],
   },
   {
     path: 'courses/add',
@@ -28,8 +28,8 @@ export const routes: Routes = [
       import('./shared/components/course-form/course-form.module').then(
         m => m.CourseFormModule
       ),
-    // canActivate: [AdminGuard],
-    // canLoad: [AuthorizedGuard],
+    canActivate: [AdminGuard],
+    canLoad: [AuthorizedGuard],
   },
   {
     path: 'courses/:id',
@@ -37,8 +37,7 @@ export const routes: Routes = [
       import('./features/course-info/course-info.module').then(
         m => m.CourseInfoModule
       ),
-    // canLoad: [AuthorizedGuard],
-    // canActivate: [NotAuthorizedGuard],
+    canLoad: [AuthorizedGuard],
   },
   {
     path: 'courses/edit/:id',
@@ -46,13 +45,13 @@ export const routes: Routes = [
       import('./shared/components/course-form/course-form.module').then(
         m => m.CourseFormModule
       ),
-    // canActivate: [AdminGuard],
-    // canLoad: [AuthorizedGuard],
+    canActivate: [AdminGuard],
+    canLoad: [AuthorizedGuard],
   },
   {
     path: 'courses',
     component: CoursesComponent,
-    // canLoad: [AuthorizedGuard],
+    canLoad: [AuthorizedGuard],
   },
   {
     path: '',

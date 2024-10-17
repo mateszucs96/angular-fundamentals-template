@@ -1,12 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  CanActivateChild,
-  Router,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
+import { CanActivate, Router, UrlTree } from '@angular/router';
 import { AuthService } from '@app/auth/services/auth.service';
 import { Observable } from 'rxjs';
 
@@ -19,10 +12,11 @@ export class NotAuthorizedGuard implements CanActivate {
     private router: Router
   ) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> | Promise<boolean> | boolean | UrlTree {
+  canActivate():
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
     const isAuthorized = this.authService.isAuthorised;
 
     if (!isAuthorized) {
