@@ -1,29 +1,10 @@
 <app-header>
-  <p>Username</p>
-  <app-button [buttonText]="ButtonText.logout"></app-button>
+  <app-button
+    [buttonText]="ButtonText.logout"
+    (click)="onLogout()"></app-button>
 </app-header>
 <div class="app-root">
-  <!--  Info component-->
-  <app-info
-    [title]="'Your List Is Empty'"
-    [text]="
-      'Please use &lsquo;Add New Course&lsquo; button to add your first course'
-    ">
-    <app-button [buttonText]="ButtonText.addNewCourse"></app-button>
-  </app-info>
-
-  <!-- Courses component -->
-  <app-courses></app-courses>
-
-  <!-- Login Form component -->
-  <app-login-form></app-login-form>
-
-  <!--  &lt;!&ndash; Login Form component &ndash;&gt;-->
-  <app-registration-form></app-registration-form>
-
-  <!--  &lt;!&ndash; Login Form component &ndash;&gt;-->
-  <app-course-form></app-course-form>
-
+  <router-outlet></router-outlet>
   <!-- Modal component -->
   <!-- <app-modal [message]="'Message'" [title]="'Title'" [okButtonText]="'Ok'" [cancelButtonText]="'Cancel'"></app-modal> -->
 </div>

@@ -5,38 +5,39 @@ import { ModalComponent } from './components/modal/modal.component';
 import {
   HeaderComponent,
   ButtonComponent,
-  InfoComponent,
   SearchComponent,
   CourseCardComponent,
-  LoginFormComponent,
-  RegistrationFormComponent,
-  CourseFormComponent,
 } from './components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DurationPipe } from './pipes/duration.pipe';
 import { CustomDatePipe } from './pipes/custom-date.pipe';
 import { EmailValidatorDirective } from '@shared/directives/email.directive';
 import { TogglePasswordDirective } from './directives/toggle-password.directive';
+import { RouterLink } from '@angular/router';
+import { AuthorsPipe } from './pipes/authors.pipe';
 
 const components = [
   HeaderComponent,
   ButtonComponent,
-  InfoComponent,
   SearchComponent,
   ModalComponent,
   CourseCardComponent,
-  LoginFormComponent,
-  RegistrationFormComponent,
-  CourseFormComponent,
   DurationPipe,
+  AuthorsPipe,
   CustomDatePipe,
   EmailValidatorDirective,
   TogglePasswordDirective,
 ];
 
 @NgModule({
-  declarations: [components],
-  imports: [CommonModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
-  exports: [components],
+  declarations: [components, AuthorsPipe],
+  imports: [
+    CommonModule,
+    FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterLink,
+  ],
+  exports: [components, AuthorsPipe],
 })
 export class SharedModule {}

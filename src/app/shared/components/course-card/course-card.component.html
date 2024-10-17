@@ -7,7 +7,7 @@
     <div class="course-card__info-text">
       <div>
         <b>Authors: </b>
-        {{ authorsNames.join(', ') }}
+        {{ course.authors | authors: (authors$ | async) }}
       </div>
       <div>
         <b>Duration: </b
@@ -23,7 +23,7 @@
     <div class="course-card__info-actions">
       <app-button
         [buttonText]="ButtonText.showCourse"
-        (click)="clickOnShow(course)"></app-button>
+        (click)="onShowCourse()"></app-button>
       <div *ngIf="isEditable" class="course-card__buttons">
         <ng-content></ng-content>
       </div>

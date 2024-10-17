@@ -1,30 +1,74 @@
-import { Component, OnInit } from '@angular/core';
-import { mockedAuthorsList, mockedCoursesList } from '@shared/mocks/mocks';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Course } from '@shared/models/course.model';
-import { mapAuthorIdsToNames } from '@app/utilities/author-utils';
+import { CoursesStoreService } from '@app/services/courses-store.service';
+import { UserStoreService } from '@app/user/services/user-store.service';
+import { Router } from '@angular/router';
+import { ButtonText } from '@shared/models/button.model';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss'],
 })
-export class CoursesComponent implements OnInit {
-  courses: Course[] = mockedCoursesList;
-  mappedCourses: { course: Course; authorsNames: string[] }[] = [];
-  selectedCourse!: Course;
+export class CoursesComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<boolean> = new Subject();
+  courses!: Course[];
+  selectedCourse!: Course | null;
+  isAdmin!: boolean;
+
+  protected readonly ButtonText = ButtonText;
+
+  constructor(
+    private coursesStoreService: CoursesStoreService,
+    private userService: UserStoreService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.mappedCourses = this.courses.map(course => ({
-      course,
-      authorsNames: mapAuthorIdsToNames(course.authors, mockedAuthorsList),
-    }));
+    this.coursesStoreService.getAll();
+    this.userService.getUser();
+    this.coursesStoreService.getAllAuthors();
+    this.coursesStoreService.courses$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(data => {
+        this.courses = data;
+      });
+    this.userService.isAdmin$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(isAdmin => (this.isAdmin = isAdmin));
   }
 
-  onCourseSelected(course: Course) {
+  onShowCourse(course: Course) {
+    this.userService.getUser();
     this.selectedCourse = course;
+    this.router.navigate(['courses', course.id]);
+  }
+
+  onEditCourse(course: Course) {
+    this.userService.getUser();
+    this.router.navigate(['courses/edit', course.id]);
+  }
+
+  onDeleteCourse(course: Course) {
+    this.userService.getUser();
+    this.coursesStoreService.deleteCourse(course.id);
+  }
+
+  onClickAddCourse() {
+    this.userService.getUser();
+    this.router.navigate(['courses/add']);
   }
 
   onSearch(searchInput: string): void {
-    // TODO: add logic to filter courses based on input
+    const trimmedSearchInput = searchInput.trim();
+    if (!trimmedSearchInput) return;
+
+    this.coursesStoreService.filterCourses(trimmedSearchInput);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

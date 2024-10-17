@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '@shared/shared.module';
-import { CourseInfoModule } from '@features/course-info/course-info.module';
 import { CoursesComponent } from '@features/courses/courses.component';
+import { CourseInfoModule } from '@features/course-info/course-info.module';
 import { CoursesListComponent } from '@features/courses/courses-list/courses-list.component';
 
 @NgModule({

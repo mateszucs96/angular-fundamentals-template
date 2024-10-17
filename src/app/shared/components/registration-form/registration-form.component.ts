@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { EmailValidatorDirective } from '@shared/directives/email.directive';
 import { ButtonText, ButtonType } from '@shared/models/button.model';
+import { AuthService } from '@app/auth/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration-form',
@@ -11,6 +12,12 @@ import { ButtonText, ButtonType } from '@shared/models/button.model';
 export class RegistrationFormComponent implements OnInit {
   registrationForm!: FormGroup;
   protected readonly ButtonText = ButtonText;
+  protected readonly ButtonType = ButtonType;
+
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.registrationForm = new FormGroup({
@@ -23,7 +30,15 @@ export class RegistrationFormComponent implements OnInit {
   onSubmit() {
     if (!this.registrationForm.valid) {
       this.registrationForm.markAllAsTouched();
+      return;
     }
+    this.authService.register(this.registrationForm.value).subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      // eslint-disable-next-line no-console
+      error: err => console.log(err),
+    });
   }
 
   get name() {
@@ -37,6 +52,4 @@ export class RegistrationFormComponent implements OnInit {
   get password() {
     return this.registrationForm.get('password');
   }
-
-  protected readonly ButtonType = ButtonType;
 }

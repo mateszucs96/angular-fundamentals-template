@@ -121,10 +121,14 @@
       <div class="separator"></div>
 
       <div class="form__action">
-        <app-button [buttonText]="ButtonText.cancel"></app-button>
+        <app-button
+          [buttonText]="ButtonText.cancel"
+          (click)="onClickCancel()"></app-button>
         <app-button
           [buttonType]="ButtonType.Submit"
-          [buttonText]="ButtonText.createCourse"></app-button>
+          [buttonText]="
+            isEditMode ? ButtonText.editCourse : ButtonText.createCourse
+          "></app-button>
       </div>
     </div>
   </div>
