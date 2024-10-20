@@ -13,6 +13,9 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from '@app/auth/interceptors/token.interceptor';
 import { AuthModule } from '@app/auth/auth.module';
 import { AdminGuard } from '@app/user/guards/admin.guard';
+import { StoreModule } from '@ngrx/store';
+import { effects, reducers } from '@app/store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +27,8 @@ import { AdminGuard } from '@app/user/guards/admin.guard';
     BrowserModule,
     SharedModule,
     FontAwesomeModule,
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot(effects),
   ],
   providers: [
     AuthorizedGuard,

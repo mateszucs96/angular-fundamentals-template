@@ -5,6 +5,7 @@ import { UserStoreService } from '@app/user/services/user-store.service';
 import { Router } from '@angular/router';
 import { ButtonText } from '@shared/models/button.model';
 import { Subject, takeUntil } from 'rxjs';
+import { CoursesStateFacade } from '@app/store/courses/courses.facade';
 
 @Component({
   selector: 'app-courses',
@@ -22,11 +23,13 @@ export class CoursesComponent implements OnInit, OnDestroy {
   constructor(
     private coursesStoreService: CoursesStoreService,
     private userService: UserStoreService,
-    private router: Router
+    private router: Router,
+    private coursesFacade: CoursesStateFacade
   ) {}
 
   ngOnInit() {
-    this.coursesStoreService.getAll();
+    this.coursesFacade.getAllCourses();
+    // this.coursesStoreService.getAll();
     this.userService.getUser();
     this.coursesStoreService.getAllAuthors();
     this.coursesStoreService.courses$
@@ -42,11 +45,13 @@ export class CoursesComponent implements OnInit, OnDestroy {
   onShowCourse(course: Course) {
     this.userService.getUser();
     this.selectedCourse = course;
+    this.coursesFacade.getSingleCourse(course.id);
     this.router.navigate(['courses', course.id]);
   }
 
   onEditCourse(course: Course) {
     this.userService.getUser();
+
     this.router.navigate(['courses/edit', course.id]);
   }
 

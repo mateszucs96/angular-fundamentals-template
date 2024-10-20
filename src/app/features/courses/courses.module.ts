@@ -4,6 +4,7 @@ import { SharedModule } from '@shared/shared.module';
 import { CoursesComponent } from '@features/courses/courses.component';
 import { CourseInfoModule } from '@features/course-info/course-info.module';
 import { CoursesListComponent } from '@features/courses/courses-list/courses-list.component';
+import { CoursesStateFacade } from '@app/store/courses/courses.facade';
 
 @NgModule({
   declarations: [CoursesComponent, CoursesListComponent],
