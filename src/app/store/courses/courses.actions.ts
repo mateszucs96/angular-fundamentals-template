@@ -3,8 +3,7 @@ import { CoursesConstants } from '@app/store/courses/courses.constants';
 import { Course } from '@shared/models/course.model';
 
 export const requestAllCourses = createAction(
-  CoursesConstants.REQUEST_ALL_COURSES,
-  props<{ courses: Course[] }>()
+  CoursesConstants.REQUEST_ALL_COURSES
 );
 export const requestAllCoursesSuccess = createAction(
   CoursesConstants.REQUEST_ALL_COURSES_SUCCESS,
