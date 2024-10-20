@@ -2,7 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { Course } from '@shared/models/course.model';
 import * as CourseActions from './courses.actions';
 
-// Add your code here
+export const coursesFeatureKey = 'courses';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface CoursesState {
