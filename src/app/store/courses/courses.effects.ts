@@ -77,8 +77,7 @@ export class CoursesEffects {
 
   getSpecificCourse$ = this.handleApiRequest(
     CoursesActions.requestSingleCourse,
-    (action: { courseId: string }) =>
-      this.coursesService.getCourse(action.courseId),
+    (action: { id: string }) => this.coursesService.getCourse(action.id),
     res => CoursesActions.requestSingleCourseSuccess({ course: res.result }),
     CoursesActions.requestSingleCourseFail
   );

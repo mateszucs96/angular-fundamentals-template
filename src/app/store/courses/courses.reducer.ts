@@ -69,15 +69,12 @@ export const coursesReducer = createReducer(
     isAllCoursesLoading: true,
     isSearchState: true,
   })),
-  on(
-    CourseActions.requestFilteredCoursesSuccess,
-    (state, { filteredCourses }) => ({
-      ...state,
-      allCourses: filteredCourses,
-      isAllCoursesLoading: false,
-      isSearchState: false,
-    })
-  ),
+  on(CourseActions.requestFilteredCoursesSuccess, (state, { courses }) => ({
+    ...state,
+    allCourses: courses,
+    isAllCoursesLoading: false,
+    isSearchState: false,
+  })),
   on(CourseActions.requestFilteredCoursesFail, (state, { error }) => ({
     ...state,
     isAllCoursesLoading: false,
