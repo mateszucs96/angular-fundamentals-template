@@ -16,7 +16,7 @@ export const requestAllCoursesFail = createAction(
 
 export const requestSingleCourse = createAction(
   CoursesConstants.REQUEST_SINGLE_COURSE,
-  props<{ courseId: string }>()
+  props<{ id: string }>()
 );
 export const requestSingleCourseSuccess = createAction(
   CoursesConstants.REQUEST_SINGLE_COURSE_SUCCESS,
@@ -33,7 +33,7 @@ export const requestFilteredCourses = createAction(
 );
 export const requestFilteredCoursesSuccess = createAction(
   CoursesConstants.REQUEST_FILTERED_COURSES_SUCCESS,
-  props<{ filteredCourses: Course[] }>()
+  props<{ courses: Course[] }>()
 );
 export const requestFilteredCoursesFail = createAction(
   CoursesConstants.REQUEST_FILTERED_COURSES_FAIL,

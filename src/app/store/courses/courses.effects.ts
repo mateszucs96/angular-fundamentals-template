@@ -70,7 +70,7 @@ export class CoursesEffects {
       this.coursesService.filterCourses(action.title),
     res =>
       CoursesActions.requestFilteredCoursesSuccess({
-        filteredCourses: res.result,
+        courses: res.result,
       }),
     CoursesActions.requestFilteredCoursesFail
   );
