@@ -1,8 +1,8 @@
-<ng-container *ngIf="selectedCourse; else courseList">
+<ng-container *ngIf="selectedCourse$; else courseList">
   <!-- Render course info -->
   <app-course-info
-    *ngIf="selectedCourse"
-    [course]="selectedCourse"></app-course-info>
+    *ngIf="selectedCourse$"
+    [course]="selectedCourse$"></app-course-info>
 </ng-container>
 
 <ng-template #courseList>
@@ -16,8 +16,8 @@
       (click)="onClickAddCourse()"></app-button>
   </div>
   <app-courses-list
-    *ngIf="!selectedCourse"
-    [courses]="courses"
+    *ngIf="!course"
+    [courses$]="courses$ | async"
     [isEditable]="isAdmin"
     (showCourse)="onShowCourse($event)"
     (editCourse)="onEditCourse($event)"

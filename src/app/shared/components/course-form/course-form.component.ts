@@ -7,6 +7,7 @@ import { Author } from '@shared/models/author.model';
 import { CoursesStoreService } from '@app/services/courses-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from '@app/services/courses.service';
+import { CoursesStateFacade } from '@app/store/courses/courses.facade';
 
 @Component({
   selector: 'app-course-form',
@@ -28,6 +29,7 @@ export class CourseFormComponent implements OnInit {
     public library: FaIconLibrary,
     private courseStoreService: CoursesStoreService,
     private courseService: CoursesService,
+    private coursesFacade: CoursesStateFacade,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -131,9 +133,9 @@ export class CourseFormComponent implements OnInit {
       return;
     }
     if (this.isEditMode) {
-      this.courseStoreService.editCourse(this.courseId, this.courseForm.value);
+      this.coursesFacade.editCourse(this.courseId, this.courseForm.value);
     } else {
-      this.courseStoreService.createCourse(this.courseForm.value);
+      this.coursesFacade.createCourse(this.courseForm.value);
     }
     this.router.navigate(['/courses']);
   }

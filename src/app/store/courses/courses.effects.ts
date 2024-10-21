@@ -41,12 +41,28 @@ export class CoursesEffects {
     );
   }
 
-  getAll$ = this.handleApiRequest(
-    CoursesActions.requestAllCourses,
-    () => this.coursesService.getAll(),
-    res => CoursesActions.requestAllCoursesSuccess({ courses: res.result }),
-    CoursesActions.requestAllCoursesFail
+  getAll$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CoursesActions.requestAllCourses),
+      exhaustMap(() =>
+        this.coursesService.getAll().pipe(
+          map((res: any) =>
+            CoursesActions.requestAllCoursesSuccess({ courses: res.result })
+          ),
+          catchError(error =>
+            of(CoursesActions.requestAllCoursesFail({ error }))
+          )
+        )
+      )
+    )
   );
+
+  // getAll$ = this.handleApiRequest(
+  //   CoursesActions.requestAllCourses,
+  //   () => this.coursesService.getAll(),
+  //   res => CoursesActions.requestAllCoursesSuccess({ courses: res.result }),
+  //   CoursesActions.requestAllCoursesFail
+  // );
 
   filteredCourses$ = this.handleApiRequest(
     CoursesActions.requestFilteredCourses,
@@ -76,8 +92,9 @@ export class CoursesEffects {
 
   editCourse$ = this.handleApiRequest(
     CoursesActions.requestEditCourse,
-    (action: { course: Course }) =>
-      this.coursesService.editCourse(action.course.id, action.course),
+    (action: { id: string; course: Course }) => {
+      return this.coursesService.editCourse(action.id, action.course);
+    },
     res => CoursesActions.requestEditCourseSuccess({ course: res.result }),
     CoursesActions.requestEditCourseFail
   );
@@ -86,7 +103,7 @@ export class CoursesEffects {
     CoursesActions.requestCreateCourse,
     (action: { course: Course }) =>
       this.coursesService.createCourse(action.course),
-    res => CoursesActions.requestEditCourseSuccess({ course: res.result }),
+    res => CoursesActions.requestCreateCourseSuccess({ course: res.result }),
     CoursesActions.requestCreateCourseFail
   );
 
