@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from '@shared/shared.module';
@@ -13,6 +13,10 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from '@app/auth/interceptors/token.interceptor';
 import { AuthModule } from '@app/auth/auth.module';
 import { AdminGuard } from '@app/user/guards/admin.guard';
+import { StoreModule } from '@ngrx/store';
+import { effects, reducers } from '@app/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +28,9 @@ import { AdminGuard } from '@app/user/guards/admin.guard';
     BrowserModule,
     SharedModule,
     FontAwesomeModule,
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot(effects),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [
     AuthorizedGuard,

@@ -3,7 +3,7 @@ import { Course } from '@shared/models/course.model';
 import { ButtonText } from '@shared/components';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesStoreService } from '@app/services/courses-store.service';
-import { UserService } from '@app/user/services/user.service';
+import { CoursesStateFacade } from '@app/store/courses/courses.facade';
 
 @Component({
   selector: 'app-course-info',
@@ -12,23 +12,20 @@ import { UserService } from '@app/user/services/user.service';
 })
 export class CourseInfoComponent implements OnInit {
   @Input() course!: Course | null;
-  protected readonly ButtonText = ButtonText;
   public authors$ = this.coursesStoreService.authors$;
+  protected readonly ButtonText = ButtonText;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService,
+    private coursesFacade: CoursesStateFacade,
     private coursesStoreService: CoursesStoreService
   ) {}
 
   ngOnInit() {
     const courseId = this.route.snapshot.paramMap.get('id');
     if (!courseId) return;
-    this.coursesStoreService.getCourse(courseId);
-    this.coursesStoreService.selectedCourse$.subscribe(
-      data => (this.course = data)
-    );
+    this.coursesFacade.course$.subscribe(value => (this.course = value));
   }
 
   onClickBack() {
