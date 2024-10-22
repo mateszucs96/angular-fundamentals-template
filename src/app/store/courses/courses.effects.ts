@@ -41,28 +41,12 @@ export class CoursesEffects {
     );
   }
 
-  getAll$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(CoursesActions.requestAllCourses),
-      exhaustMap(() =>
-        this.coursesService.getAll().pipe(
-          map((res: any) =>
-            CoursesActions.requestAllCoursesSuccess({ courses: res.result })
-          ),
-          catchError(error =>
-            of(CoursesActions.requestAllCoursesFail({ error }))
-          )
-        )
-      )
-    )
+  getAll$ = this.handleApiRequest(
+    CoursesActions.requestAllCourses,
+    () => this.coursesService.getAll(),
+    res => CoursesActions.requestAllCoursesSuccess({ courses: res.result }),
+    CoursesActions.requestAllCoursesFail
   );
-
-  // getAll$ = this.handleApiRequest(
-  //   CoursesActions.requestAllCourses,
-  //   () => this.coursesService.getAll(),
-  //   res => CoursesActions.requestAllCoursesSuccess({ courses: res.result }),
-  //   CoursesActions.requestAllCoursesFail
-  // );
 
   filteredCourses$ = this.handleApiRequest(
     CoursesActions.requestFilteredCourses,

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Course } from '@shared/models/course.model';
 import { IconNames } from '@shared/models/button.model';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-courses-list',
@@ -9,7 +8,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./courses-list.component.scss'],
 })
 export class CoursesListComponent {
-  @Input() courses$!: Course[] | null;
+  @Input() courses!: Course[] | null;
   @Input() authorsNames!: string[];
   @Input() isEditable!: boolean;
 

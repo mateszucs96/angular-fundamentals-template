@@ -1,5 +1,5 @@
 <main class="course-list">
-  <ng-container *ngFor="let courseAndAuthors of courses$">
+  <ng-container *ngFor="let courseAndAuthors of courses">
     <app-course-card
       [course]="courseAndAuthors"
       [isEditable]="isEditable"
