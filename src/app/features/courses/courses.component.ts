@@ -4,7 +4,7 @@ import { CoursesStoreService } from '@app/services/courses-store.service';
 import { UserStoreService } from '@app/user/services/user-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonText } from '@shared/models/button.model';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { CoursesStateFacade } from '@app/store/courses/courses.facade';
 
 @Component({
@@ -15,8 +15,7 @@ import { CoursesStateFacade } from '@app/store/courses/courses.facade';
 export class CoursesComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject();
   courses$ = this.coursesFacade.allCourses$;
-  selectedCourse$: Observable<Course | null>;
-  course!: Course | null;
+  selectedCourse$ = this.coursesFacade.course$;
   isAdmin!: boolean;
 
   protected readonly ButtonText = ButtonText;
@@ -27,9 +26,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private coursesFacade: CoursesStateFacade
-  ) {
-    this.selectedCourse$ = this.coursesFacade.course$;
-  }
+  ) {}
 
   ngOnInit() {
     this.coursesFacade.getAllCourses();
@@ -60,7 +57,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
   onClickAddCourse() {
     this.userService.getUser();
-    this.coursesFacade.course$.subscribe(value => (this.course = value));
     this.router.navigate(['courses/add']);
   }
 

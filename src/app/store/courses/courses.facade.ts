@@ -25,7 +25,6 @@ export class CoursesStateFacade {
   public isSearchingState$ = this.store.pipe(select(isSearchingStateSelector));
   public allCourses$ = this.store.pipe(select(getAllCourses));
   public course$ = this.store.pipe(select(getCourse));
-  public errorMessage$ = this.store.pipe(select(getErrorMessage));
 
   constructor(private store: Store<CoursesState>) {}
 
